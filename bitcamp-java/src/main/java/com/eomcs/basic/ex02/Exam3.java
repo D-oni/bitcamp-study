@@ -7,7 +7,7 @@ public class Exam3 {
   Class c= Exam3.class;
   
   }
-  @Override //<==컴파일러에게 기능을 재정의 함을 알리는 명령이다.
+  @Override //<==컴파일러에게 기능을 재정의함을 알리는 명령이다.
   public String toString(){
     return "okok";
   }
