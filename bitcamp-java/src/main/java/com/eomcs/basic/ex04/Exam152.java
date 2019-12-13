@@ -1,6 +1,5 @@
 package com.eomcs.basic.ex04;
 
-import sun.awt.shell.Win32ShellFolder2.SystemIcon;
 
 public class Exam152 {
   public static void main(String[] args) {
