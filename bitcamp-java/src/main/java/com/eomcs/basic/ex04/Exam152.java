@@ -7,7 +7,7 @@ public class Exam152 {
 
     int i;
     //변수에 값을 넣지않고 사용할 수 없다.
-    System.out.println(i);  //오류
+    //System.out.println(i);  //오류
     
     
   }

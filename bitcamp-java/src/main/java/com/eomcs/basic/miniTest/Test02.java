@@ -9,7 +9,7 @@
 // 컴퓨터: 가위
 // => 이겼습니다.
 //
-package com.eomcs.basic.ex04.assignment2;
+package com.eomcs.basic.miniTest;
 import java.util.Scanner;
 
 public class Test02 {

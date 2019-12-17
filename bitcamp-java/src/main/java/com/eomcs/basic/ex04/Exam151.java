@@ -24,7 +24,7 @@ public class Exam151 {
       j = i *3;  //표현식
       j=Math.abs(-200); //표현식
       j = (i>100) ? 1 : -1; //표현식
-      j =System.out.println(100); //그냥 문장, 표현식x
+      //j =System.out.println(100); //그냥 문장, 표현식x
 
       //문장(statement)
       //-자바언어로 작성한 명령어 

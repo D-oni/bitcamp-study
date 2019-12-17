@@ -6,7 +6,7 @@ public class Exam153 {
 
     int i;
     //변수에 값을 넣지않고 사용할 수 없다.
-    int j = i;    
+    //int j = i;    
     
   }
 }

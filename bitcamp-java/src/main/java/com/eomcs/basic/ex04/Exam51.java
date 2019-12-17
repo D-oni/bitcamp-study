@@ -15,7 +15,7 @@ public class Exam51 {
     //b1=1;
     //b2=0; //컴파일오류
 
-    int i = b1;
+    //int i = b1;
 
   }
 }
