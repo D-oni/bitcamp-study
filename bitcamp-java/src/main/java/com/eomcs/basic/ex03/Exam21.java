@@ -9,7 +9,7 @@ public class Exam21 {
     System.out.println(100);
 
     //8진수리터럴
-  System.out.println(0144);
+  System.out.println(014 );
 
   //2진수
   System.out.println(0b01100100);

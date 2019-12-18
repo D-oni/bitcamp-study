@@ -22,5 +22,11 @@ public class Exam22 {
     System.out.println(i2);
     System.out.println(i3);
 
+    //nextInt()
+    //=>space,tab,new line을 만나면 그 앞까지 입력한 문자열을 
+    //  int 값으로 바꿔 리턴한다.
+    //=>입력한 문자열이 숫자를 의미하는 문자열이 아니라면
+    //  int값으로 바꿀 수 없기 때문에 실행오류가 발생한다.
+
   }
 }

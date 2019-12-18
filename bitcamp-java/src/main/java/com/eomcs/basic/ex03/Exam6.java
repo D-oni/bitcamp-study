@@ -21,7 +21,7 @@ public class Exam6 {
     System.out.println("취업여부:"+false);
     System.out.println("키:"+180.7f);
     
-
+    
   }
 }
 //문자열의 저장?

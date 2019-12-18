@@ -69,10 +69,14 @@ public class Exam31 {
     double d1 =99988.88;
     double d2=11.11111;
     double d3 =d1+d2;
-    System.out.println(d3); //부동소수점을 연산을 하려면 double을 사용하는게 좋음
+    System.out.println(d3); //고정된 부동소수점은 float, 부동소수점을 연산(ex.덧셈)을 하려면 double을 사용하는게 좋음
 
     f1=3.141592f;
-    d1=f1;
+    d1=f1;  //컴파일ok. 단 , 값은 왜곡 될 수 있다.
     System.out.println(d1);
+
+    //f1=d1;  //컴파일오류.
+
+
   }
 }

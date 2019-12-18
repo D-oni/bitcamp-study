@@ -102,5 +102,6 @@ public class Exam61 {
    int[] arr8;
    // arr8 ={100,90,80};  //컴파일오류
     arr8=new int[]{100,90,80};
+   
    }
 }

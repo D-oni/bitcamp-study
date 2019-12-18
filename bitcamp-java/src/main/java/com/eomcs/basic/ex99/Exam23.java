@@ -19,5 +19,18 @@ public class Exam23 {
     System.out.println(i2);
     System.out.println(s);
 
+    //nextInt()
+    //=>space,tab,new line 기호를 만나면 그 앞까지 읽은 입력값을 
+    //  int 로 만들어 리턴한다
+    //=>현재커서의 위치는 공백(white space:space,tab,new line)에있다.
+    //  즉 값을 읽고난 후 공백을 제거하지 않는다.
+    //=>그래서 다음 메소드는 공백부터 읽게 된다.
+    //=>nextInt()는 앞에 공백이 있으면 무시한다.
+    //  다음 공백을 만날 때 까지 읽는다.
+    //결론!
+    //=>nextInt()다음에 nextLine()을 실행할 때
+    //  nextLine()은 nextInt()가 읽은 값 다음부터 읽기 떄문에
+    // 기대하지 않은 값이 리턴 될 수 있다.
+
   }
 }
