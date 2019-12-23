@@ -9,7 +9,7 @@ public class Exam0430 {
     int b;
   }
 
-  static MyObject getMyObject() {
+  static MyObject getMyObject() { 
     // Exam03_3.java 에 정의된 MyObject 클래스 사용
     MyObject ref = new MyObject();
     ref.a = 100;

@@ -9,7 +9,8 @@ public class Exam0410 {
     a = b;
     b = temp;
     System.out.printf("swap(): a=%d, b=%d\n", a, b);
-  }
+  } 
+  
 
   public static void main(String[] args) {
     int a = 100;
@@ -19,7 +20,7 @@ public class Exam0410 {
   }
 }
 // 실행 순서와 메모리
-// 1) java -classpath bin step06.Exam04_1
+// 1) java -classpath bin com.eomcs.basic.ex07.Exam0410
 //    => JVM은 클래스 정보를 Method Area 영역에 로드한다.
 // 2) main() 호출
 //    => JVM Stack 영역에 main() 메서드가 사용할 로컬 변수를 준비한다.
