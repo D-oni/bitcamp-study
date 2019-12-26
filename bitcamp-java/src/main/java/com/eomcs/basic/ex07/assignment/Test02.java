@@ -35,7 +35,6 @@ public class Test02 {
           
           Thread.currentThread().sleep(1000);
           printValues(values, i);
-          System.out.println(values);
         }
       }
     }
