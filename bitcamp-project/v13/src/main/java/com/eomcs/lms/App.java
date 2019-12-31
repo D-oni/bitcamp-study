@@ -9,30 +9,39 @@ import com.eomcs.lms.handler.MemberHandler;
 public class App {
 
   static Scanner keyboard = new Scanner(System.in);
-
+  
   public static void main(String[] args) {
-
-
-
+    
+    // LessonHandler의 메서드를 사용하기 전에 
+    // 그 메서드가 작업할 때 사용할 키보드 객체를 설정해줘야 한다.
+    LessonHandler.keyboard = keyboard;
+    
+    // MemberHandler의 메서드를 사용하기 전에 
+    // 그 메서드가 작업할 때 사용할 키보드 객체를 설정해준다.
+    MemberHandler.keyboard = keyboard;
+    
+    // BoardHandler의 메서드를 사용하기 전에 
+    // 그 메서드가 작업할 때 사용할 키보드 객체를 설정해준다.
+    BoardHandler.keyboard = keyboard;
 
     //BoardHandler의 메서드가 사용할  메모리만 게시판마다 따로 생성한다.
-    BoardHandler 게시판1 = new BoardHandler(keyboard);
-    BoardHandler 게시판2 = new BoardHandler(keyboard);
-    BoardHandler 게시판3 = new BoardHandler(keyboard);
-    BoardHandler 게시판4 = new BoardHandler(keyboard);
-    BoardHandler 게시판5 = new BoardHandler(keyboard);
-    BoardHandler 게시판6 = new BoardHandler(keyboard);
-
-    LessonHandler 정규수업= new LessonHandler(keyboard);
-
-    MemberHandler 일반회원= new MemberHandler(keyboard);
-
+    BoardHandler 게시판1 = new BoardHandler();
+    BoardHandler 게시판2 = new BoardHandler();
+    BoardHandler 게시판3 = new BoardHandler();
+    BoardHandler 게시판4 = new BoardHandler();
+    BoardHandler 게시판5 = new BoardHandler();
+    BoardHandler 게시판6 = new BoardHandler();
+    
+    LessonHandler 정규수업= new LessonHandler();
+    
+    MemberHandler 일반회원= new MemberHandler();
+    
     String command;
-
+    
     do {
       System.out.print("\n명령> ");
       command = keyboard.nextLine();
-
+      
       switch (command) {
         case "/lesson/add":
           // 다른 클래스로 분리한 메서드를 호출할 때는
@@ -52,7 +61,7 @@ public class App {
           게시판1.addBoard();
           break;
         case "/board/list":
-          게시판1.listBoard();
+          게시판1.addBoard();
           break;
         case "/board2/add":
           게시판2.addBoard();
@@ -81,7 +90,7 @@ public class App {
           break;
         case "/board6/list":
           게시판6.addBoard();
-
+          
         case "/board/detail":
           게시판1.detailBoard();
           break;
@@ -109,11 +118,11 @@ public class App {
             System.out.println("실행할 수 없는 명령입니다.");
           }
       }
-
+      
     } while (!command.equalsIgnoreCase("quit"));
-
+    
     System.out.println("안녕!");
-
+    
     keyboard.close();
   }
 }

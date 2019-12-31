@@ -52,7 +52,7 @@ public class App {
           게시판1.addBoard();
           break;
         case "/board/list":
-          게시판1.listBoard();
+          게시판1.addBoard();
           break;
         case "/board2/add":
           게시판2.addBoard();

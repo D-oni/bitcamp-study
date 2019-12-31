@@ -47,6 +47,9 @@ public class App {
 
 
   public static void main(String[] args) {
+    //LessonHandler의 메서드를 사용하기 전에
+    //그 메소드가 작업할 때 사용할  키보드 객체를 설정 해 줘야한다.
+    LessonHandler.keyboard = keyboard;
 
     String command;
 
