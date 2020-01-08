@@ -3,67 +3,39 @@ package com.eomcs.util;
 import java.util.Arrays;
 
 public class ArrayList<E> {
-
-  static final int DEFAULT_CAPACITY = 3;
-
+  static final int DEFAULT_CAPACITY = 10;
   Object[] list;
   int size = 0;
 
   public ArrayList() {
-    this.list = new Object[DEFAULT_CAPACITY];
+    list  = new Object[DEFAULT_CAPACITY];
   }
 
-  public ArrayList(int capacity) {
-    if (capacity < DEFAULT_CAPACITY || capacity > 10000)
-      this.list = new Object[DEFAULT_CAPACITY];
-    else 
-      this.list = new Object[capacity];
-  }
-
-  @SuppressWarnings({"unchecked", "rawtypes"})
-  public E[] toArray(E[] arr) {
-    if(arr.length<this.size) {
-      return(E[]) Arrays.copyOf(this.list,this.size,arr.getClass());    //새 배열을 만들어 복사-size가 작다면 이 코드 실행
-    }
-    System.arraycopy(this.list, 0, arr, 0, this.size);  // 기존에 가진size만큼 복사-충분히 담을 수 있는 size를 가졌다면 이 코드 실행
-
-    //위의 arraycopy()는 다음 코드와 같다.
-    //    for(int i =0; i<arr.length; i++) {
-    //      arr[i] =(E) this.list[i];
-    //  }
-    
-    return arr;
-  }
-
-  public void add(E obj) {
-    if (this.size == this.list.length) {
-      int oldCapacity = this.list.length;
-      int newCapacity = oldCapacity + (oldCapacity >> 1);
-      this.list = Arrays.copyOf(this.list, newCapacity);
-    }
-    this.list[this.size++] = obj;
+  public ArrayList(int initialCapacity) {
+    if (initialCapacity > DEFAULT_CAPACITY)
+      list = new Object[initialCapacity];
+    else
+      list = new Object[DEFAULT_CAPACITY];
   }
 
   @SuppressWarnings("unchecked")
-  public E get(int idx) {
-    if (idx >= 0 && idx < this.size) {
-      return (E)this.list[idx];
-    } else {
-      return null;
+  public E[] toArray(E[] a) {
+    if (a.length < size) {
+      return (E[]) Arrays.copyOf(list, size, a.getClass());
     }
+    System.arraycopy(list, 0, a, 0, size);
+    if (a.length > size)
+      a[size] = null;
+    return a;
   }
 
-  public int size() {
-    return this.size();
+  public void add(E obj) {
+    if (size >= list.length) {
+      int oldCapacity = list.length;
+      int newCapacity = oldCapacity + (oldCapacity >> 1);
+      list = Arrays.copyOf(list, newCapacity);
+    }
+
+    list[size++] = obj;
   }
 }
-
-
-
-
-
-
-
-
-
-
