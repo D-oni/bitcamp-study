@@ -22,13 +22,7 @@ public class BoardList {
   }
 
   public Board[] toArray() {
-    /*
-    Board[] arr = new Board[this.size];
-    for (int i = 0; i < this.size; i++) {
-      arr[i] = this.list[i];
-    }
-    return arr;
-    */
+
     return Arrays.copyOf(this.list, this.size);
   }
 
@@ -37,15 +31,8 @@ public class BoardList {
       // 현재 배열에 게시글 객체가 꽉 찼으면, 배열을 늘린다.
       int oldCapacity = this.list.length;
       int newCapacity = oldCapacity + (oldCapacity >> 1);
-      /*
-      Board[] arr = new Board[newCapacity];
-      for (int i = 0; i < this.list.length; i++) {
-        arr[i] = this.list[i];
-      }
-      this.list = arr;
-      */
+
       this.list = Arrays.copyOf(this.list, newCapacity);
-      System.out.printf("새 배열을 %d 개 생성하였음!", newCapacity);
     }
     this.list[this.size++] = board;
   }

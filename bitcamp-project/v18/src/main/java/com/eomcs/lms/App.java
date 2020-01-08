@@ -11,7 +11,6 @@ public class App {
   
   public static void main(String[] args) {
     
-    
     BoardHandler boardHandler = new BoardHandler(keyboard);
     LessonHandler lessonHandler = new LessonHandler(keyboard);
     MemberHandler memberHandler = new MemberHandler(keyboard);
@@ -44,30 +43,6 @@ public class App {
         case "/board/detail":
           boardHandler.detailBoard();
           break;  
-        case "/board/update":
-          boardHandler.updateBoard();
-          break; 
-        case "/board/delete":
-          boardHandler.deleteBoard();
-          break; 
-        case "/lesson/detail":
-          lessonHandler.detailLesson();
-          break; 
-        case "/lesson/update":
-          lessonHandler.updateLesson();
-          break; 
-        case "/lesson/delete":
-          lessonHandler.deleteLesson();
-          break; 
-        case "/member/detail":
-          memberHandler.detailMember();
-          break; 
-        case "/member/update":
-          memberHandler.updateMember();
-          break; 
-        case "/member/delete":
-          memberHandler.deleteMember();
-          break; 
         default:
           if (!command.equalsIgnoreCase("quit")) {
             System.out.println("실행할 수 없는 명령입니다.");
