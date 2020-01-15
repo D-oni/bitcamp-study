@@ -1,4 +1,4 @@
-// 상속 - 상속 문법을 이용한 기능 추가
+ // 상속 - 상속 문법을 이용한 기능 추가
 package com.eomcs.oop.ex05.d;
 
 public class Exam01 {

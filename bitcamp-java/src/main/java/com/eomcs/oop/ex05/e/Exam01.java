@@ -7,9 +7,16 @@ public class Exam01 {
         // => B 클래스는 A 클래스도 사용한다고 선언했기 때문에
         //    A 클래스의 설계도에 따라 A 클래스에 선언된 인스턴스 변수도 함께 생성된다.
         B obj = new B();
-        obj.v2 = 200;
         obj.v1 = 100;
+        obj.v2 = 200;
         System.out.printf("v2=%d, v1=%d\n", obj.v2, obj.v1);
+        
+        //클래스는 오직 한번만로딩된다
+        //=>그래서 static블록도 위에서 한번 실행되면 다시 실행하지 않는다.
+        B obj2= new B();
+        obj.v1=1000;
+        obj.v2=2000;
+        System.out.printf("v2=%d,v1=%d\n",obj.v1,obj.v2);
         
         // 인스턴스 생성 절차
         // 1) B 클래스가 사용한다고 선언한 클래스를 먼저 메모리에 로딩한다.

@@ -13,6 +13,7 @@ public class Exam0330 {
         
         StringBuffer sb1 = new StringBuffer("Hello");
         StringBuffer sb2 = new StringBuffer("Hello");
+        //
         System.out.println(sb1 == sb2); // false
         System.out.println(sb1.equals(sb2)); // false
         // sb1.equals(sb2)의 리턴 값은 false이다.

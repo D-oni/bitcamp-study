@@ -18,6 +18,7 @@ public abstract class Car {
         System.out.println("시동 끈다!");
     }
 
+    //
     public void run() {
         System.out.println("달린다.");
     }
