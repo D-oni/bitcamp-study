@@ -2,11 +2,12 @@ package com.eomcs.util;
 
 import java.util.Arrays;
 
-public class ArrayList<E> extends AbstractList<E>{
+public class ArrayList<E> {
   
   private static final int DEFAULT_CAPACITY = 2;
   
   Object[] elementData;
+  int size;
   
   public ArrayList() {
     this.elementData = new Object[DEFAULT_CAPACITY];
@@ -19,16 +20,14 @@ public class ArrayList<E> extends AbstractList<E>{
       this.elementData = new Object[initialCapacity];
     }
   }
-  //추상메서드를 다음과 같이 @Override 애노테이션을 붙이지않아도
-  //문법검사가 이루어지기 때문에 편하다.
-//  @Override
+  
   public void add(E e) {
     if (this.size == this.elementData.length) {
       grow();
     }
     this.elementData[this.size++] = e;
   }
-//  @Override
+  
   @SuppressWarnings("unchecked")
   public E get(int index) {
     if (index < 0 || index >= this.size) {
@@ -36,7 +35,7 @@ public class ArrayList<E> extends AbstractList<E>{
     }
     return (E) this.elementData[index];
   }
-//  @Override
+  
   @SuppressWarnings("unchecked")
   public E set(int index, E e) {
     if (index < 0 || index >= this.size) {
@@ -46,7 +45,7 @@ public class ArrayList<E> extends AbstractList<E>{
     this.elementData[index] = e;
     return oldValue;
   }
-//  @Override
+  
   @SuppressWarnings("unchecked")
   public E remove(int index) {
     if (index < 0 || index >= this.size) {
@@ -64,7 +63,11 @@ public class ArrayList<E> extends AbstractList<E>{
     this.size--;
     return oldValue;
   }
-//  @Override
+  
+  public int size() {
+    return this.size;
+  }
+  
   public Object[] toArray() {
     return Arrays.copyOf(this.elementData, this.size);
     /*
@@ -75,7 +78,7 @@ public class ArrayList<E> extends AbstractList<E>{
     return arr;
     */
   }
-//  @Override
+  
   @SuppressWarnings("unchecked")
   public E[] toArray(E[] arr) {
     if (arr.length < this.size) {
@@ -85,7 +88,7 @@ public class ArrayList<E> extends AbstractList<E>{
     System.arraycopy(this.elementData, 0, arr, 0, this.size);
     return arr; // 넉넉할 때는 파라미터로 받은 배열을 그대로 리턴. 
   }
-//  @Override
+  
   public void add(int index, E value) {
     if (index < 0 || index >= this.size)
       return;
@@ -111,6 +114,8 @@ public class ArrayList<E> extends AbstractList<E>{
     return oldSize + (oldSize >> 1);
   }
 }
+
+
 
 
 
