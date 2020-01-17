@@ -1,13 +1,13 @@
 // 캡슐화(encapsulation) - 응용
 package com.eomcs.oop.ex07.b;
 
-import java.util.Calendar;
 import com.eomcs.oop.ex07.b.sub.C;
 
 public class Exam0220 extends C {
 
   public static void main(String[] args) {
-//    Car c1 = new Car(); // 컴파일 오류!
+    
+    //Car c1 = new Car(); // 컴파일 오류!
     // 생성자가 private이기 때문에 다른 클래스에서 호출할 수 없다.
     // 따라서 인스턴스를 생성할 수 없다.
     // 
@@ -17,8 +17,6 @@ public class Exam0220 extends C {
     Car c2 = Car.create("티코");
     System.out.printf("%s,%s,%d,%d\n", 
         c2.model, c2.maker, c2.cc, c2.valve);
-    
-    Calendar obj = Calendar.getInstance();//생성자가 private일 때는 new 로 생성하면 안된다.
 
   }
 }

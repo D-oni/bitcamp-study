@@ -7,7 +7,5 @@ public class Exam0110 {
     obj1.name = "홍길동";
 
     obj1.print();
-    //        A p =null;
-    //        p.print();
   }
 }
