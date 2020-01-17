@@ -2,16 +2,15 @@ package com.eomcs.util;
 
 import java.lang.reflect.Array;
 
-public class LinkedList<E> extends AbstractList<E>{
+public class LinkedList<E> extends AbstractList<E> {
   
   Node<E> first;
   
   Node<E> last;
   
-  
   @Override
   public void add(E value) {
-    Node<E> newNode = new Node<>();     
+    Node<E> newNode = new Node<>();
     newNode.value = value;
     
     if (first == null) {
@@ -23,6 +22,7 @@ public class LinkedList<E> extends AbstractList<E>{
     
     this.size++;
   }
+  
   @Override
   public E get(int index) {
     if (index < 0 || index >= size)
@@ -35,6 +35,7 @@ public class LinkedList<E> extends AbstractList<E>{
     
     return cursor.value;
   }
+  
   @Override
   public void add(int index, E value) {
     if (index < 0 || index >= size)
@@ -58,6 +59,7 @@ public class LinkedList<E> extends AbstractList<E>{
     
     this.size++;
   }
+  
   @Override
   public E remove(int index) {
     if (index < 0 || index >= size)
@@ -82,6 +84,7 @@ public class LinkedList<E> extends AbstractList<E>{
     
     return deletedNode.value;
   }
+  
   @Override
   public E set(int index, E value) {
     if (index < 0 || index >= size)
@@ -97,6 +100,7 @@ public class LinkedList<E> extends AbstractList<E>{
     
     return oldValue;
   }
+  
   @Override
   public Object[] toArray() {
     Object[] arr = new Object[size];
@@ -109,6 +113,7 @@ public class LinkedList<E> extends AbstractList<E>{
     
     return arr;
   }
+  
   @Override
   @SuppressWarnings("unchecked")
   public E[] toArray(E[] arr) {
