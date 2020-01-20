@@ -3,7 +3,7 @@ package com.eomcs.corelib.ex08;
 
 import java.util.HashMap;
 
-public class Exam0130 {
+public class Exam0150 {
 
   static class MyKey {
     String major;
@@ -17,6 +17,15 @@ public class Exam0130 {
     @Override
     public String toString() {
       return "MyKey [major=" + major + ", no=" + no + "]";
+    }
+
+    @Override
+    public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((major == null) ? 0 : major.hashCode());
+      result = prime * result + no;
+      return result;
     }
 
     @Override

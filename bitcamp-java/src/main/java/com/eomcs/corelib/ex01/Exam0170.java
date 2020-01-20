@@ -6,13 +6,13 @@ package com.eomcs.corelib.ex01;
 public class Exam0170 {
   
   static class Score {
+
     String name;
     int kor;
     int eng;
     int math;
     int sum;
     float aver;
-    
     
     public Score() {}
     
@@ -33,6 +33,7 @@ public class Exam0170 {
   }
   
   public static void main(String[] args) {
+    
     Score s1 = new Score("홍길동", 100, 100, 100);
     System.out.println(s1);
     
