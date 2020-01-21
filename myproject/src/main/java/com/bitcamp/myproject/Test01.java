@@ -19,10 +19,13 @@ public class Test01 {
        sum+=i;
    
    
-    }System.out.println(sum);
+    }
+//     System.out.println(sum);
+     System.out.printf("%d에서 %d까지의 합은 %d입니다.",num1,num2,sum);
+     
       
-    
-
+     
+scan.close();
 
   }
 }

@@ -1,35 +1,34 @@
+// listBoard() 메서드 변경
+// => toArray()의 리턴 값을 사용하는 대신 iterator()의 리턴 값을 사용하여 목록 출력. 
 package com.eomcs.lms.handler;
 
 import java.sql.Date;
-import java.util.Scanner;
 import com.eomcs.lms.domain.Board;
-import com.eomcs.util.ArrayList;
+import com.eomcs.util.Iterator;
+import com.eomcs.util.List;
+import com.eomcs.util.Prompt;
 
 public class BoardHandler {
   
-  ArrayList<Board> boardList;
+  List<Board> boardList;
   
-  Scanner input;
+  Prompt prompt;
   
-  
-  public BoardHandler(Scanner input) {
-    this.input = input;
-    this.boardList = new ArrayList<>();
-  }
-  
-  public BoardHandler(Scanner input, int capacity) {
-    this.input = input;
-    this.boardList = new ArrayList<>(capacity);
+  public BoardHandler(Prompt prompt, List<Board> list) {
+    this.prompt = prompt;
+    this.boardList = list;
   }
   
   public void listBoard() {
-    // BoardList의 보관된 값을 받을 배열을 준비한다. 
-    Board[] arr = new Board[this.boardList.size()];
-
-    // toArray()에게 빈 배열을 넘겨서 복사 받는다.
-    this.boardList.toArray(arr);
+    // BoardList 에게 값을 꺼내는 일을 해줄 Iterator 객체을 달라고 한다.
+    Iterator<Board> iterator = boardList.iterator();
     
-    for (Board b : arr) {
+    // Iterator 객체에게 목록에서 꺼낼 값이 있는지 물어본다. 
+    while (iterator.hasNext()) {
+      
+      // 값이 있다고 한다면, 그 값을 꺼내 달라고 요청한다.
+      Board b = iterator.next();
+      
       System.out.printf("%d, %s, %s, %d\n", 
           b.getNo(), b.getTitle(), b.getDate(), b.getViewCount());
     }
@@ -38,13 +37,8 @@ public class BoardHandler {
   public void addBoard() {
     Board board = new Board();
     
-    System.out.print("번호? ");
-    board.setNo(input.nextInt());
-    input.nextLine(); // 줄바꿈 기호 제거용
-
-    System.out.print("내용? ");
-    board.setTitle(input.nextLine());
-
+    board.setNo(prompt.inputInt("번호? "));
+    board.setTitle(prompt.inputString("내용? "));
     board.setDate(new Date(System.currentTimeMillis()));
     board.setViewCount(0);
     
@@ -54,21 +48,67 @@ public class BoardHandler {
   }
   
   public void detailBoard() {
-    System.out.print("게시물 인덱스? ");
-    int index = input.nextInt();
-    input.nextLine(); // 숫자 뒤의 남은 공백 제거
+    int index = indexOfBoard(prompt.inputInt("번호? "));
     
-    Board board = this.boardList.get(index);
-    
-    if (board == null) {
-      System.out.println("게시물 인덱스가 유효하지 않습니다.");
+    if (index == -1) {
+      System.out.println("해당 번호의 게시글이 없습니다.");
       return;
     }
     
+    Board board = this.boardList.get(index);
     System.out.printf("번호: %d\n", board.getNo());
     System.out.printf("제목: %s\n", board.getTitle());
     System.out.printf("등록일: %s\n", board.getDate());
     System.out.printf("조회수: %d\n", board.getViewCount());
+  }
+  
+  public void updateBoard() {
+    int index = indexOfBoard(prompt.inputInt("번호? "));
+    
+    if (index == -1) {
+      System.out.println("해당 번호의 게시글이 없습니다.");
+      return;
+    }
+    
+    Board oldBoard = this.boardList.get(index);
+    Board newBoard = new Board();
+    
+    newBoard.setNo(oldBoard.getNo());
+    newBoard.setViewCount(oldBoard.getViewCount());
+    newBoard.setDate(new Date(System.currentTimeMillis()));
+    newBoard.setTitle(prompt.inputString(
+        String.format("내용(%s)? ", oldBoard.getTitle()), 
+        oldBoard.getTitle()));
+    
+    if (newBoard.equals(oldBoard)) {
+      System.out.println("게시글 변경을 취소했습니다.");
+      return;
+    }
+    
+    this.boardList.set(index, newBoard);
+    System.out.println("게시글을 변경했습니다.");
+  }
+  
+  public void deleteBoard() {
+    int index = indexOfBoard(prompt.inputInt("번호? "));
+    
+    if (index == -1) {
+      System.out.println("해당 번호의 게시글이 없습니다.");
+      return;
+    }
+    
+    this.boardList.remove(index);
+    
+    System.out.println("게시글을 삭제했습니다.");
+  }
+  
+  private int indexOfBoard(int no) {
+    for (int i = 0; i < this.boardList.size(); i++) {
+      if (this.boardList.get(i).getNo() == no) {
+        return i;
+      }
+    }
+    return -1;
   }
 
 }

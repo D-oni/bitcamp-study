@@ -75,17 +75,15 @@ public class Exam0150 {
     System.out.println(map.get(k4));
     System.out.println(map.get(k5));
 
-    MyKey k6 = new MyKey("컴공", 3); // k3와 같은 값을 갖는다.
+    MyKey k6 = new MyKey("컴공", 3);
+    // k3와 같은 값을 갖는다.
     // 하지만 인스턴스는 다르다!
 
-    System.out.println("-----------------------------------");
     System.out.println(k3 == k6);
     System.out.printf("equals(): %b\n", k3.equals(k6));
     System.out.printf("hashCode(): %d, %d\n", k3.hashCode(), k6.hashCode());
     System.out.println("-----------------------------------");
 
-
-    // equals()의 리턴값이 true라고 해서 같은 Key로 간주하지 않는다.
     System.out.println(map.get(k6));
     // k3와 k6는 인스턴스가 다르더라도
     // hashCode()의 리턴 값이 같고, equals()의 결과가 true이기 때문에

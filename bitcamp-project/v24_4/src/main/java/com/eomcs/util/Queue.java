@@ -54,8 +54,8 @@ public class Queue<E> extends LinkedList<E> implements Cloneable {
   
   public Iterator<E> iterator() {
     // this = 인스턴스 주소;
-    // local class : 특정 메서드 안에서만 사용되는 중첩 클래스라면 로컬 클래스로 정의하라.
     
+    // local class : 특정 메서드 안에서만 사용되는 중첩 클래스라면 로컬 클래스로 정의하라.
     class QueueIterator<T> implements Iterator<T> {
       
       Queue<T> queue;

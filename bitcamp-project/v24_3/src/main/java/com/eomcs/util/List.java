@@ -26,25 +26,7 @@ public interface List<E> {
   // => 값을 저장하는 방식에 따라 구현 방법이 다르기 때문에 
   //    서브 클래스가 반드시 구현해야만 하는 추상 메서드이다.
   Iterator<E> iterator();
-  public class ListIterator<E> implements Iterator<E> {
   
-  List<E> list;
-  int cursor;
-  
-  public ListIterator(List<E> list) {
-    this.list = list;
-  }
-  
-  @Override
-  public boolean hasNext() {
-    return cursor < list.size();
-  }
-  
-  @Override
-  public E next() {
-    return list.get(cursor++);
-  }
- }
 }
 
 

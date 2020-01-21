@@ -35,8 +35,7 @@ public class Test02 {
 
       }
 
-
-      if(num[i] < min){
+      else if(num[i] < min){
 
         min = num[i];
 
@@ -48,6 +47,6 @@ public class Test02 {
 
     System.out.println("최소값:" + min);
 
-
+    scan.close();
   }
 }

@@ -7,13 +7,14 @@ public class Exam0120 {
     String s2 = new String("Hello");
     String s3 = "Hello";
 
+    System.out.println(s1 == s2); // false
+    System.out.println(s1 == s3); // false
+    System.out.println(s2 == s3); // false
+
     // equals()?
     // => Object에 정의되어 있는 메서드이다.
     // => 인스턴스가 같은지 비교한다.
     //
-    System.out.println(s1 == s2); // 결과: false
-    System.out.println(s1 == s3); // 결과: false
-    System.out.println(s1 == s2); // 결과: false
     System.out.println(s1.equals(s2)); // 결과: true
     System.out.println(s1.equals(s3)); // 결과: true
 

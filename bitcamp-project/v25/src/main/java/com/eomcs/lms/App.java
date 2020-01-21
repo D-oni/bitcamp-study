@@ -19,6 +19,9 @@ public class App {
   
   static Scanner keyboard = new Scanner(System.in);
   
+  // java.util.Stack 에서 제공하는 Iterator 객체는 FIFO 방식으로 값을 꺼내준다.
+  // LIFO 방식으로 꺼내는 Iterator가 필요하다면,
+  // java.util.Deque 구현체를 사용하라!
   static Deque<String> commandStack = new ArrayDeque<>();
   static Queue<String> commandQueue = new LinkedList<>();
   
