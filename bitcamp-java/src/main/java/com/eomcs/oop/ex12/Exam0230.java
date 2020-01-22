@@ -6,7 +6,7 @@ public class Exam0230 {
   static interface Player {
     void play();
 
-    // void stop();
+    void stop();
   }
 
   public static void main(String[] args) {
