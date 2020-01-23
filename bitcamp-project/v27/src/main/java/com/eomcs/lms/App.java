@@ -43,7 +43,7 @@ public class App {
     Prompt prompt = new Prompt(keyboard);
     HashMap<String, Command> commandMap = new HashMap<>();
 
-    LinkedList<Board> boardList = new LinkedList<>(); // 컴파일 오류!
+    LinkedList<Board> boardList = new LinkedList<>();
     commandMap.put("/board/add", new BoardAddCommand(prompt, boardList));
     commandMap.put("/board/list", new BoardListCommand(boardList));
     commandMap.put("/board/detail", new BoardDetailCommand(prompt, boardList));
@@ -66,6 +66,7 @@ public class App {
 
     commandMap.put("/hello", new HelloCommand(prompt));
     commandMap.put("/compute/plus", new ComputePlusCommand(prompt));
+
 
     String command;
 
@@ -97,7 +98,7 @@ public class App {
         try {
           commandHandler.execute();
         } catch (Exception e) {
-          System.out.printf("명령어 실행 중 오류발생:%s\n", e.getMessage());
+          System.out.printf("명령어 실행 중 오류 발생: %s\n", e.getMessage());
         }
       } else {
         System.out.println("실행할 수 없는 명령입니다.");
@@ -107,6 +108,12 @@ public class App {
     keyboard.close();
   }
 
+  // 이전에는 Stack에서 값을 꺼내는 방법과 Queue에서 값을 꺼내는 방법이 다르기 때문에
+  // printCommandHistory()와 printCommandHistory2() 메서드를 따로 정의했다.
+  // 이제 Stack과 Queue는 일관된 방식으로 값을 꺼내주는 Iterator가 있기 때문에
+  // 두 메서드를 하나로 합칠 수 있다.
+  // 파라미터로 Iterator를 받아서 처리하기만 하면 된다.
+  //
   private static void printCommandHistory(Iterator<String> iterator) {
     int count = 0;
     while (iterator.hasNext()) {
