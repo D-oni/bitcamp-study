@@ -5,7 +5,7 @@ import java.io.File;
 
 public class Exam0310 {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
     // 1) 생성할 디렉토리 경로 설정
     // - 폴더 경로를 지정하지 않으면 현재 폴더를 의미한다.
     //
