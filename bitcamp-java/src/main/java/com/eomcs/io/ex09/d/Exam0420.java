@@ -13,18 +13,25 @@ public class Exam0420 {
     ObjectInputStream in = new ObjectInputStream(bufIn);
 
     // 테스트1:
-    // -Member클래스를 변경하지 않은 상태에서 데이터읽기
+    // - Member 클래스를 변경하지 않은 상태에서 데이터 읽기
+    // - 결과 => OK!
     // 테스트2:
-    // -Member클래스에 tel 필드를 추가한 후 데이터 읽기
+    // - Member 클래스에 tel 필드를 추가한 후 데이터 읽기
+    // - 결과 => OK!
     // 테스트3:
-    // -Member클래스에 tel 필드를 추가한 후 데이터 읽기
+    // - Member 클래스에서 age 필드를 제거한 후 데이터 읽기
+    // - 결과 => OK!
     Member member = (Member) in.readObject();
 
     in.close();
 
     System.out.println(member);
+    
+    // 결론!
+    // - Member 객체를 serialize 한 후,
+    //   필드를 추가하거나 삭제하더라도 
+    //   serialVersionUID 값만 같으면 
+    //   JVM은 같은 형식으로 판단한다.
   }
-
 }
-
 

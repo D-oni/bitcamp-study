@@ -17,7 +17,7 @@ public class Exam0410 {
     member.age = 27;
     member.gender = true;
 
-    // serialize 하는 Member의 버전은 1280이다.
+    // serialize 하는 Member의 버전은 1280 이다.
     out.writeObject(member);
 
     out.close();

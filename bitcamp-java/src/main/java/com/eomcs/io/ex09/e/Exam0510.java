@@ -19,16 +19,13 @@ public class Exam0510 {
     s.math = 92;
     s.compute();
 
+    // serialize 할 때 transient가 붙은 필드의 값은 제외된다.
     out.writeObject(s);
 
     out.close();
+    System.out.println("출력 완료!");
   }
 
 }
-
-// 용어 정리!
-// Serialize : 객체 ===> 바이트 배열 (marshalling 이라고도 부른다.)
-// Deserialize : 바이트 배열 ===> 객체 (unmarshalling 이라고도 부른다.)
-//
 
 
