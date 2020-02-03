@@ -1,8 +1,14 @@
 package com.eomcs.lms.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Board {
+// 객체를 serialize하려면 이 기능을 활성화 시켜야한다.
+// -java.io.Serializable을 구현하라
+// -serialize데이터를 구분하기위해 버전 번호를 명시하라
+public class Board implements Serializable {
+
+  private static final long serialVersionUID = 20200130L;
 
   private int no;
   private String title;

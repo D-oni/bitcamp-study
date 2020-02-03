@@ -1,8 +1,11 @@
 package com.eomcs.lms.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Member {
+public class Member implements Serializable {
+
+  private static final long serialVersionUID = 20200130L;
 
   private int no;
   private String name;
@@ -11,6 +14,27 @@ public class Member {
   private String photo;
   private String tel;
   private Date registeredDate;
+
+  public static Member valueOf(String csv) {
+    String[] data = csv.split(",");
+
+    Member member = new Member();
+    member.setNo(Integer.parseInt(data[0]));
+    member.setName(data[1]);
+    member.setEmail(data[2]);
+    member.setPassword(data[3]);
+    member.setPhoto(data[4]);
+    member.setTel(data[5]);
+    member.setRegisteredDate(Date.valueOf(data[6]));
+
+    return member;
+  }
+
+  public String toCsvString() {
+    return String.format("%d,%s,%s,%s,%s,%s,%s", this.getNo(), this.getName(), this.getEmail(),
+        this.getPassword(), this.getPhoto(), this.getTel(), this.getRegisteredDate());
+  }
+
 
   @Override
   public int hashCode() {
