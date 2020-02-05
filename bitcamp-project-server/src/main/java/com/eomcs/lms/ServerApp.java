@@ -42,10 +42,10 @@ public class ServerApp {
   }
   // 옵저버 관련코드 끝!
 
+  @SuppressWarnings("unchecked")
   public void service() {
 
     notifyApplicationInitialized();
-
     try (
         // 서버쪽 연결 준비
         // => 클라이언트의 연결을 9999번 포트에서 기다린다.
@@ -54,9 +54,12 @@ public class ServerApp {
       System.out.println("클라이언트 연결 대기중...");
 
       while (true) {
+        // 서버에 대기하고 있는 클라이언트와 연결
+        // => 대기하고 있는 클라이언트와 연결될 때까지 리턴하지 않는다.
         Socket socket = serverSocket.accept();
         System.out.println("클라이언트와 연결되었음!");
 
+        // 클라이언트의 요청 처리
         if (processRequest(socket) == 9) {
           break;
         }
@@ -66,6 +69,7 @@ public class ServerApp {
 
     } catch (Exception e) {
       System.out.println("서버 준비 중 오류 발생!");
+      return;
     }
 
     notifyApplicationDestroyed();
@@ -75,7 +79,12 @@ public class ServerApp {
 
   @SuppressWarnings("unchecked")
   int processRequest(Socket clientSocket) {
-    try (Socket socket = clientSocket;
+    try (
+        // 요청 처리가 끝난 후 클라이언트와 연결된 소켓을 자동으로 닫으려면
+        // 이 괄호 안에 별도의 로컬 변수에 담는다.
+        Socket socket = clientSocket;
+
+        // 클라이언트의 메시지를 수신하고 클라이언트로 전송할 입출력 도구 준비
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream())) {
 
@@ -90,356 +99,74 @@ public class ServerApp {
           out.flush();
           break;
         }
-
-        if (request.equals("/server/stop")) {
+        if (request.equals("server/stop")) {
           out.writeUTF("OK");
           out.flush();
           return 9;
         }
-
         List<Board> boards = (List<Board>) context.get("boardList");
-        List<Member> members = (List<Member>) context.get("memberList");
         List<Lesson> lessons = (List<Lesson>) context.get("lessonList");
+        List<Member> members = (List<Member>) context.get("memberList");
 
         if (request.equals("/board/list")) {
           out.writeUTF("OK");
-
           out.reset();
-          // => 기존에 출력했던 List<Board> 객체의 직렬화 데이터를 무시하고
-          // 새로 직렬화를 수행한다.
-
           out.writeObject(boards);
 
         } else if (request.equals("/board/add")) {
-          try {
-            Board board = (Board) in.readObject();
+          Board board = (Board) in.readObject();
 
-            int i = 0;
-            for (; i < boards.size(); i++) {
-              if (boards.get(i).getNo() == board.getNo()) {
-                break;
-              }
+          int i = 0;
+          for (; i < boards.size(); i++) {
+            if (boards.get(i).getNo() == board.getNo()) {
+              break;
             }
-
-            if (i == boards.size()) { // 같은 번호의 게시물이 없다면,
-              boards.add(board); // 새 게시물을 등록한다.
-              out.writeUTF("OK");
-
-            } else {
-              out.writeUTF("FAIL");
-              out.writeUTF("같은 번호의 게시물이 있습니다.");
-            }
-
-
-          } catch (Exception e) {
+          }
+          if (i == boards.size()) {
+            boards.add(board);
+            out.writeUTF("OK");
+          } else {
             out.writeUTF("FAIL");
-            out.writeUTF(e.getMessage());
+            out.writeUTF("같은 번호의 게시물이 있습니다.");
           }
         } else if (request.equals("/board/detail")) {
           try {
             int no = in.readInt();
 
-            Board board = null;
-            for (Board b : boards) {
-              if (b.getNo() == no) {
-                board = b;
-                break;
-              }
+
+            out.writeUTF("/board/detail");
+            out.writeInt(no);
+            out.flush();
+
+            String response = in.readUTF();
+
+            if (response.equals("FAIL")) {
+              System.out.println(in.readUTF());
+              return;
             }
 
-            if (board != null) {
-              out.writeUTF("OK");
-              out.writeObject(board);
-
-            } else {
-              out.writeUTF("FAIL");
-              out.writeUTF("해당 번호의 게시물이 없습니다.");
-            }
-
-          } catch (Exception e) {
-            out.writeUTF("FAIL");
-            out.writeUTF(e.getMessage());
-          }
-        } else if (request.equals("/board/update")) {
-          try {
             Board board = (Board) in.readObject();
-
-            int index = -1;
-            for (int i = 0; i < boards.size(); i++) {
-              if (boards.get(i).getNo() == board.getNo()) {
-                index = i;
-                break;
-              }
-            }
-
-            if (index != -1) {
-              boards.set(index, board);
-              out.writeUTF("OK");
-            } else {
-              out.writeUTF("FAIL");
-              out.writeUTF("해당 번호의 게시물이 없습니다.");
-            }
+            System.out.printf("번호: %d\n", board.getNo());
+            System.out.printf("제목: %s\n", board.getTitle());
+            System.out.printf("등록일: %s\n", board.getDate());
+            System.out.printf("조회수: %d\n", board.getViewCount());
 
           } catch (Exception e) {
-            out.writeUTF("FAIL");
-            out.writeUTF(e.getMessage());
-          }
-        } else if (request.equals("/board/delete")) {
-          try {
-            int no = in.readInt();
-
-            int index = -1;
-            for (int i = 0; i < boards.size(); i++) {
-              if (boards.get(i).getNo() == no) {
-                index = i;
-                break;
-              }
-            }
-
-            if (index != -1) { // 삭제하려는 번호의 게시물을 찾았다면
-              boards.remove(index);
-              out.writeUTF("OK");
-
-            } else {
-              out.writeUTF("FAIL");
-              out.writeUTF("해당 번호의 게시물이 없습니다.");
-            }
-          } catch (Exception e) {
-            out.writeUTF("FAIL");
-            out.writeUTF(e.getMessage());
+            System.out.println("명령 실행 중 오류 발생!");
           }
 
-        } else if (request.equals("/member/list")) {
-          out.writeUTF("OK");
-
-          out.reset();
-          // => 기존에 출력했던 List<Board> 객체의 직렬화 데이터를 무시하고
-          // 새로 직렬화를 수행한다.
-
-          out.writeObject(members);
-
-        } else if (request.equals("/member/add")) {
-          try {
-            Member member = (Member) in.readObject();
-
-            int i = 0;
-            for (; i < members.size(); i++) {
-              if (members.get(i).getNo() == member.getNo()) {
-                break;
-              }
-            }
-
-            if (i == members.size()) { // 같은 번호의 게시물이 없다면,
-              members.add(member); // 새 게시물을 등록한다.
-              out.writeUTF("OK");
-
-            } else {
-              out.writeUTF("FAIL");
-              out.writeUTF("같은 번호의 회원이 있습니다.");
-            }
 
 
-          } catch (Exception e) {
-            out.writeUTF("FAIL");
-            out.writeUTF(e.getMessage());
-          }
-        } else if (request.equals("/member/detail")) {
-          try {
-            int no = in.readInt();
-
-            Member member = null;
-            for (Member b : members) {
-              if (b.getNo() == no) {
-                member = b;
-                break;
-              }
-            }
-
-            if (member != null) {
-              out.writeUTF("OK");
-              out.writeObject(member);
-
-            } else {
-              out.writeUTF("FAIL");
-              out.writeUTF("해당 번호의 회원이 없습니다.");
-            }
-
-          } catch (Exception e) {
-            out.writeUTF("FAIL");
-            out.writeUTF(e.getMessage());
-          }
-        } else if (request.equals("/member/update")) {
-          try {
-            Member member = (Member) in.readObject();
-
-            int index = -1;
-            for (int i = 0; i < members.size(); i++) {
-              if (members.get(i).getNo() == member.getNo()) {
-                index = i;
-                break;
-              }
-            }
-
-            if (index != -1) {
-              members.set(index, member);
-              out.writeUTF("OK");
-            } else {
-              out.writeUTF("FAIL");
-              out.writeUTF("해당 번호의 회원이 없습니다.");
-            }
-
-          } catch (Exception e) {
-            out.writeUTF("FAIL");
-            out.writeUTF(e.getMessage());
-          }
-        } else if (request.equals("/member/delete")) {
-          try {
-            int no = in.readInt();
-
-            int index = -1;
-            for (int i = 0; i < members.size(); i++) {
-              if (members.get(i).getNo() == no) {
-                index = i;
-                break;
-              }
-            }
-
-            if (index != -1) { // 삭제하려는 번호의 게시물을 찾았다면
-              members.remove(index);
-              out.writeUTF("OK");
-
-            } else {
-              out.writeUTF("FAIL");
-              out.writeUTF("해당 번호의 회원이 없습니다.");
-            }
-          } catch (Exception e) {
-            out.writeUTF("FAIL");
-            out.writeUTF(e.getMessage());
-          }
-
-        } else if (request.equals("/lesson/list")) {
-          out.writeUTF("OK");
-
-          out.reset();
-          // => 기존에 출력했던 List<Board> 객체의 직렬화 데이터를 무시하고
-          // 새로 직렬화를 수행한다.
-
-          out.writeObject(lessons);
-
-        } else if (request.equals("/lesson/add")) {
-          try {
-            Lesson lesson = (Lesson) in.readObject();
-
-            int i = 0;
-            for (; i < lessons.size(); i++) {
-              if (lessons.get(i).getNo() == lesson.getNo()) {
-                break;
-              }
-            }
-
-            if (i == lessons.size()) { // 같은 번호의 게시물이 없다면,
-              lessons.add(lesson); // 새 게시물을 등록한다.
-              out.writeUTF("OK");
-
-            } else {
-              out.writeUTF("FAIL");
-              out.writeUTF("같은 번호의 게시물이 있습니다.");
-            }
-
-
-          } catch (Exception e) {
-            out.writeUTF("FAIL");
-            out.writeUTF(e.getMessage());
-          }
-        } else if (request.equals("/lesson/detail")) {
-          try {
-            int no = in.readInt();
-
-            Lesson lesson = null;
-            for (Lesson l : lessons) {
-              if (l.getNo() == no) {
-                lesson = l;
-                break;
-              }
-            }
-
-            if (lesson != null) {
-              out.writeUTF("OK");
-              out.writeObject(lesson);
-
-            } else {
-              out.writeUTF("FAIL");
-              out.writeUTF("해당 번호의 게시물이 없습니다.");
-            }
-
-          } catch (Exception e) {
-            out.writeUTF("FAIL");
-            out.writeUTF(e.getMessage());
-          }
-        } else if (request.equals("/lesson/update")) {
-          try {
-            Lesson lesson = (Lesson) in.readObject();
-
-            int index = -1;
-            for (int i = 0; i < lessons.size(); i++) {
-              if (lessons.get(i).getNo() == lesson.getNo()) {
-                index = i;
-                break;
-              }
-            }
-
-            if (index != -1) {
-              lessons.set(index, lesson);
-              out.writeUTF("OK");
-            } else {
-              out.writeUTF("FAIL");
-              out.writeUTF("해당 번호의 게시물이 없습니다.");
-            }
-
-          } catch (Exception e) {
-            out.writeUTF("FAIL");
-            out.writeUTF(e.getMessage());
-          }
-        } else if (request.equals("/lesson/delete")) {
-          try {
-            int no = in.readInt();
-
-            int index = -1;
-            for (int i = 0; i < lessons.size(); i++) {
-              if (lessons.get(i).getNo() == no) {
-                index = i;
-                break;
-              }
-            }
-
-            if (index != -1) { // 삭제하려는 번호의 게시물을 찾았다면
-              lessons.remove(index);
-              out.writeUTF("OK");
-
-            } else {
-              out.writeUTF("FAIL");
-              out.writeUTF("해당 번호의 게시물이 없습니다.");
-            }
-          } catch (Exception e) {
-            out.writeUTF("FAIL");
-            out.writeUTF(e.getMessage());
-          }
-        } else {
-          out.writeUTF("FAIL");
-          out.writeUTF("요청한 명령을 처리할 수 없습니다.");
         }
-        out.flush();
+
       }
 
-      System.out.println("클라이언트로 메시지를 전송하였음!");
-
-      return 0;
 
     } catch (Exception e) {
       System.out.println("예외 발생:");
       e.printStackTrace();
-      return -1;
     }
+    return 0;
   }
 
   public static void main(String[] args) {
@@ -448,5 +175,7 @@ public class ServerApp {
     ServerApp app = new ServerApp();
     app.addApplicationContextListener(new DataLoaderListener());
     app.service();
+
   }
+
 }
