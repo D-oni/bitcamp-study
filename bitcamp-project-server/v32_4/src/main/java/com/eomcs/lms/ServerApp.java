@@ -140,7 +140,7 @@ public class ServerApp {
             int no = in.readInt();
 
             Board board = null;
-            for (Board b : boards)f {
+            for (Board b : boards) {
               if (b.getNo() == no) {
                 board = b;
                 break;
