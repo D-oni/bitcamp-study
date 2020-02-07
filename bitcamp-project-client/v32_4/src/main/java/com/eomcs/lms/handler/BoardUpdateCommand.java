@@ -26,7 +26,7 @@ public class BoardUpdateCommand implements Command {
       int no = prompt.inputInt("번호? ");
 
       // 기존의 게시물을 가져온다.
-      out.writeUTF("/board/detail");
+      out.writeUTF("/board/update");
       out.writeInt(no);
       out.flush();
 
