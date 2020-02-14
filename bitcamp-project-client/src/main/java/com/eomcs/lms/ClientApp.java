@@ -54,17 +54,9 @@ public class ClientApp {
     commandStack = new ArrayDeque<>();
     commandQueue = new LinkedList<>();
 
-    try {
-      host = prompt.inputString("서버? ");
-      port = prompt.inputInt("포트? ");
 
-    } catch (Exception e) {
-      System.out.println("서버 주소 또는 포트 번호가 유효하지 않습니다!");
-      keyboard.close();
-      return;
-    }
-    //
-    DaoProxyHelper daoProxyHelper = new DaoProxyHelper(host,port);
+    // DAO 프록시의 서버 연결을 도와줄 도우미 객체 준비
+    DaoProxyHelper daoProxyHelper = new DaoProxyHelper(host, port);
 
     // DAO 프록시 객체 준비
     BoardDaoProxy boardDao = new BoardDaoProxy(daoProxyHelper);

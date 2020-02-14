@@ -10,7 +10,7 @@ public class LessonHandler {
   
   ArrayList<Lesson> lessonList;
   
-  public Prompt prompt;
+  Prompt prompt;
   
   public LessonHandler(Prompt prompt) {
     this.prompt = prompt;

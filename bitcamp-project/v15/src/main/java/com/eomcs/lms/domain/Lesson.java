@@ -2,8 +2,8 @@ package com.eomcs.lms.domain;
 
 import java.sql.Date;
 
- public class Lesson {
-
+public class Lesson {
+  
   private int no;
   private String title;
   private String description;
@@ -11,6 +11,7 @@ import java.sql.Date;
   private Date endDate;
   private int totalHours;
   private int dayHours;
+  
   public int getNo() {
     return no;
   }
@@ -53,6 +54,13 @@ import java.sql.Date;
   public void setDayHours(int dayHours) {
     this.dayHours = dayHours;
   }
-  
 }
+
+
+
+
+
+
+
+
 

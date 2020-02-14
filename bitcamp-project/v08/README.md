@@ -1,4 +1,4 @@
- System.out.printf("%d,%d\n",values[i],values[i+1]);# 08 - 기본 문법의 활용
+# 08 - 기본 문법의 활용
 
 ## 학습 목표
 

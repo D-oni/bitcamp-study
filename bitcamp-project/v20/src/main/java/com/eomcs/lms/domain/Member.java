@@ -3,7 +3,7 @@ package com.eomcs.lms.domain;
 import java.sql.Date;
 
 public class Member {
-
+  
   private int no;
   private String name;
   private String email;
@@ -11,6 +11,9 @@ public class Member {
   private String photo;
   private String tel;
   private Date registeredDate;
+  
+  
+  
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -24,7 +27,6 @@ public class Member {
     result = prime * result + ((tel == null) ? 0 : tel.hashCode());
     return result;
   }
-
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -68,7 +70,6 @@ public class Member {
       return false;
     return true;
   }
-
   public int getNo() {
     return no;
   }
@@ -111,5 +112,4 @@ public class Member {
   public void setRegisteredDate(Date registeredDate) {
     this.registeredDate = registeredDate;
   }
-  }
-
+}

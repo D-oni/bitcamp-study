@@ -25,7 +25,6 @@ public class Lesson {
     result = prime * result + totalHours;
     return result;
   }
-
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -63,7 +62,6 @@ public class Lesson {
       return false;
     return true;
   }
-  
   public int getNo() {
     return no;
   }

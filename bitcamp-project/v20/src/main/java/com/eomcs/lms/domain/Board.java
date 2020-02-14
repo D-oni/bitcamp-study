@@ -3,23 +3,24 @@ package com.eomcs.lms.domain;
 import java.sql.Date;
 
 public class Board {
-
+  
   private int no;
   private String title;
   private Date date;
   private int viewCount;
+  private String writer;
+  
 
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((date == null) ? 0 : date.hashCode());
     result = prime * result + no;
     result = prime * result + ((title == null) ? 0 : title.hashCode());
     result = prime * result + viewCount;
+    result = prime * result + ((writer == null) ? 0 : writer.hashCode());
     return result;
   }
-
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -29,11 +30,6 @@ public class Board {
     if (getClass() != obj.getClass())
       return false;
     Board other = (Board) obj;
-    if (date == null) {
-      if (other.date != null)
-        return false;
-    } else if (!date.equals(other.date))
-      return false;
     if (no != other.no)
       return false;
     if (title == null) {
@@ -43,9 +39,13 @@ public class Board {
       return false;
     if (viewCount != other.viewCount)
       return false;
+    if (writer == null) {
+      if (other.writer != null)
+        return false;
+    } else if (!writer.equals(other.writer))
+      return false;
     return true;
   }
-
   public int getNo() {
     return no;
   }
@@ -70,5 +70,12 @@ public class Board {
   public void setViewCount(int viewCount) {
     this.viewCount = viewCount;
   }
+  public String getWriter() {
+    return writer;
+  }
+  public void setWriter(String writer) {
+    this.writer = writer;
+  }
+  
+  
 }
-

@@ -42,7 +42,7 @@ public class LinkedList {
     newNode.value = value;
     
     Node cursor = first;
-    for (int i = 0; i < index - 1; i++) {//지정된 위치에 삽입하려면 삽입하려는 위치 바로 전까지 
+    for (int i = 0; i < index - 1; i++) {
       cursor = cursor.next;
     }
     
@@ -54,33 +54,34 @@ public class LinkedList {
       cursor.next = newNode;
     }
     
-    this.size++;    //add했으니 size증가
+    this.size++;
   }
+  
   public Object remove(int index) {
-    
-    if (index < 0 || index >= size) //인덱스 유효성검사
+    if (index < 0 || index >= size)
       return null;
     
     Node cursor = first;
-    for (int i = 0; i < index - 1; i++) {//지정된 위치에 삽입하려면 삽입하려는 위치 바로 전까지 
+    for (int i = 0; i < index - 1; i++) {
       cursor = cursor.next;
     }
-    Node deletedNode=null;
-    if(index==0) {
+    
+    Node deletedNode = null;
+    if (index == 0) {
       deletedNode = first;
-      first=deletedNode.next;
-    }else {
+      first = deletedNode.next;
+    } else {
       deletedNode = cursor.next;
-      cursor.next =deletedNode.next;
+      cursor.next = deletedNode.next;
     }
-      
-      deletedNode.next=null;
-     size--;
-     
-      return deletedNode.value;  //삭제된 노드의 값을 쓰기위한 리턴
-    }
+
+    deletedNode.next = null;
+    size--;
+    
+    return deletedNode.value;
+  }
   
-  public Object set(int index,Object value) {
+  public Object set(int index, Object value) {
     if (index < 0 || index >= size)
       return null;
     
@@ -89,7 +90,7 @@ public class LinkedList {
       cursor = cursor.next;
     }
     
-    Object oldValue =cursor.value;
+    Object oldValue = cursor.value;
     cursor.value = value;
     
     return oldValue;
@@ -99,5 +100,4 @@ public class LinkedList {
     Object value;
     Node next;
   }
-}  
- 
+}

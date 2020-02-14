@@ -7,42 +7,49 @@ public class App {
 
   public static void main(String[] args) {
     
-    // 키보드 입력 스트림(System.in)을 스캐너 객체에 연결한다.
-    // => 스캐너는 입력 스트림으로 들어온 문자열을 줄 단위로 잘라주는 역할을 수행한다.
+    // 키보드에서 사용자가 입력한 값을 읽어 
+    // 문자열이나 정수, 부동소수점 등으로 리턴하는 역할
     Scanner keyboard = new Scanner(System.in);
-
-    // 콘솔에서 입력 받은 값을 변수에 저장한다.
+    
     System.out.print("번호? ");
-    int no = Integer.parseInt(keyboard.nextLine());
+    int no = keyboard.nextInt();
+    
+    keyboard.nextLine(); // nextInt() 후에 남아 있는 줄바꿈 기호를 제거한다.
     
     System.out.print("수업명? ");
     String title = keyboard.nextLine();
     
     System.out.print("설명? ");
-    String contents = keyboard.nextLine();
+    String description = keyboard.nextLine();
     
     System.out.print("시작일? ");
-    Date startDate = Date.valueOf(keyboard.nextLine());
+    // "yyyy-MM-dd" 형태로 입력된 문자열을 날짜 정보로 바꾼다.
+    Date startDate = Date.valueOf(keyboard.next());
     
     System.out.print("종료일? ");
-    Date endDate = Date.valueOf(keyboard.nextLine());
+    Date endDate = Date.valueOf(keyboard.next());
     
     System.out.print("총수업시간? ");
-    int totalHours = Integer.parseInt(keyboard.nextLine());
+    int totalHours = keyboard.nextInt();
     
     System.out.print("일수업시간? ");
-    int dayHours = Integer.parseInt(keyboard.nextLine());
+    int dayHours = keyboard.nextInt();
     
-    // 사용후 스캐너 객체의 자원을 해제한다.
-    keyboard.close();
-    
-    System.out.println(); // 빈 줄 출력
+    System.out.println();
     
     System.out.printf("번호: %d\n", no);
     System.out.printf("수업명: %s\n", title);
-    System.out.printf("설명: %s\n", contents);
+    System.out.printf("설명: %s\n", description);
     System.out.printf("기간: %s ~ %s\n", startDate, endDate);
     System.out.printf("총수업시간: %d 시간\n", totalHours);
     System.out.printf("일수업시간: %d 시간\n", dayHours);
+    
+    keyboard.close();
   }
 }
+
+
+
+
+
+

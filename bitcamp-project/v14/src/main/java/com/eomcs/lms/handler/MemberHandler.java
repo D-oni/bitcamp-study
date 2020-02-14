@@ -2,27 +2,30 @@ package com.eomcs.lms.handler;
 
 import java.sql.Date;
 import java.util.Scanner;
-import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.domain.Member;
 
 public class MemberHandler {
-
-
-  Member[] members = new Member[MEMBER_SIZE];
+  
+  // 인스턴스 필드 = 논-스태틱 필드
+  // => 개별적으로 관리해야 하는 변수
+  // => new 명령을 통해 생성된다.
+  //
+  Member[] members;
   int memberCount = 0;
 
   public Scanner input;
 
-
-  public static final int MEMBER_SIZE=100;
-
+  // 클래스 필드 = 스태틱 필드
+  // => 공유하는 변수 
+  // => 클래스가 메모리에 로딩될 때 자동으로 생성된다.
+  //
+  static final int MEMBER_SIZE = 100;
+  
   public MemberHandler(Scanner input) {
-    this.input=input;
-    this.members=new Member[MEMBER_SIZE];
+    this.input = input;
+    this.members = new Member[MEMBER_SIZE];
   }
-
-
-
+  
   public void listMember() {
     for (int i = 0; i < this.memberCount; i++) {
       Member m = this.members[i];
@@ -54,7 +57,7 @@ public class MemberHandler {
     member.tel = input.nextLine();
 
     member.registeredDate = new Date(System.currentTimeMillis());
-
+    
     this.members[this.memberCount++] = member;
     System.out.println("저장하였습니다.");
   }

@@ -8,7 +8,8 @@ public class App {
   public static void main(String[] args) {
 
     Scanner keyboard = new Scanner(System.in);
-    final int SIZE=100;
+
+    final int SIZE = 100;
 
     int[] no = new int[SIZE];
     String[] title = new String[SIZE];
@@ -18,12 +19,14 @@ public class App {
     int[] totalHours = new int[SIZE];
     int[] dayHours = new int[SIZE];
 
-    int count=0;
-    for(int i=0; i<SIZE; i++) { 
+    int count = 0;
+    
+    for (int i = 0; i < SIZE; i++) {
       count++;
-
+      
       System.out.print("번호? ");
       no[i] = keyboard.nextInt();
+
       keyboard.nextLine(); // nextInt() 후에 남아 있는 줄바꿈 기호를 제거한다.
 
       System.out.print("수업명? ");
@@ -44,18 +47,19 @@ public class App {
 
       System.out.print("일수업시간? ");
       dayHours[i] = keyboard.nextInt();
-      keyboard.nextLine();  //일 수업시간 입력값 다음에 남아있는 줄바꿈 값 제거
-
-      System.out.println("계속 입력하시겠습니까(Y/n)");
-      String response =keyboard.nextLine();
-      if(!response.equalsIgnoreCase("y"));
-      break;
+      keyboard.nextLine(); // 일수업시간 입력 값 다음에 남아 있는 줄바꿈 값 제거
+      
+      System.out.print("계속 입력하시겠습니까?(Y/n) ");
+      String response = keyboard.nextLine();
+      if (!response.equalsIgnoreCase("y"))
+        break;
     }
-    for(int i=0;i<count;i++) {
-      System.out.printf("%d,%s,%s,%s~%s,%d,%d\n",no[i],title[i],description[i],startDate[i],endDate[i],totalHours[i],dayHours[i]);
+    System.out.println();
+
+    for (int i = 0; i < count; i++) {
+      System.out.printf("%d, %s, %s ~ %s, %d\n",
+          no[i], title[i], startDate[i], endDate[i], totalHours[i]);
     }
-
-
 
     keyboard.close();
   }

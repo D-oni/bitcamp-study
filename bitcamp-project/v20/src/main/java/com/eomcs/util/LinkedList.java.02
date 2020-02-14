@@ -1,14 +1,8 @@
 package com.eomcs.util;
 
 public class LinkedList {
-
-  Node first;
-  Node last;
-
-  static class Node{
+  static class Node {
     Object value;
     Node next;
-    
   }
-
 }

@@ -12,7 +12,23 @@ public class Board {
 
   // CSV 포맷:
   // - 번호,제목,등록일,조회수,작성자
+  //
+  public static Board valueOf(String csv) {
+    String[] data = csv.split(",");
 
+    Board board = new Board();
+    board.setNo(Integer.parseInt(data[0]));
+    board.setTitle(data[1]);
+    board.setDate(Date.valueOf(data[2]));
+    board.setViewCount(Integer.parseInt(data[3]));
+    board.setWriter(data[4]);
+    return board;
+  }
+
+  public String toCsvString() {
+    return String.format("%d,%s,%s,%d,%s", this.getNo(), this.getTitle(), this.getDate(),
+        this.getViewCount(), this.getWriter());
+  }
 
   @Override
   public int hashCode() {

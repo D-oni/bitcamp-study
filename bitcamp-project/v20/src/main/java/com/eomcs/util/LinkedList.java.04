@@ -3,23 +3,26 @@ package com.eomcs.util;
 public class LinkedList {
   
   Node first;
+  
   Node last;
+  
   int size;
   
   public void add(Object value) {
-    
     Node newNode = new Node();
-    newNode.value=value;
+    newNode.value = value;
     
-    if(first == null) {
-      last=first=newNode;
-    }else {
+    if (first == null) {
+      last = first = newNode;
+    } else {
       last.next = newNode;
-      last=newNode;
+      last = newNode;
     }
-     size++;     //add했으니 size증가
+    
+    this.size++;
   }
-  static class Node{
+  
+  static class Node {
     Object value;
     Node next;
   }

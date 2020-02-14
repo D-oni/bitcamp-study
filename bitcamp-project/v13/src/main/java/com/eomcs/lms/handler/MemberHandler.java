@@ -6,12 +6,19 @@ import com.eomcs.lms.domain.Member;
 
 public class MemberHandler {
   
-  
-   Member[] members = new Member[MEMBER_SIZE];
-   int memberCount = 0;
-   
-  public static Scanner keyboard;
+  // 인스턴스 필드 = 논-스태틱 필드
+  // => 개별적으로 관리해야 하는 변수
+  // => new 명령을 통해 생성된다.
+  //
+  Member[] members = new Member[MEMBER_SIZE];
+  int memberCount = 0;
+
+  // 클래스 필드 = 스태틱 필드
+  // => 공유하는 변수 
+  // => 클래스가 메모리에 로딩될 때 자동으로 생성된다.
+  //
   static final int MEMBER_SIZE = 100;
+  public static Scanner keyboard;
   
   public void listMember() {
     for (int i = 0; i < this.memberCount; i++) {
