@@ -1,4 +1,4 @@
-package com.eomcs.util;
+package com.eomcs.algorithm.data_structure.array;
 
 public class ArrayListTest {
 
@@ -47,10 +47,12 @@ public class ArrayListTest {
     
     System.out.println("---------------");
     
+    
   }
   
   static void print(ArrayList<String> arr) {
-    String[] list = arr.toArray(new String[0]);
+    String[] list = new String[arr.size()];
+    arr.toArray(list);
     for (String e : list) {
       System.out.println(e);
     }

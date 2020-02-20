@@ -1,10 +1,10 @@
 package com.eomcs.basic.ex07;
 
-//# 메서드 : call by value //메서드 호출 시 값을 넘기는 것
+//# 메서드 : call by value
 //
 public class Exam0310 {
 
-  static void swap(int a, int b) {  //primative타입은 다 call by value이다.
+  static void swap(int a, int b) {
     System.out.printf("swap(): a=%d, b=%d\n", a, b);
     int temp = a;
     a = b;
@@ -26,8 +26,8 @@ public class Exam0310 {
 }
 
 // call by value
-// => 자바에서는 primitive data type인 경우 메서드를 호출할 때 
-//    값을 넘긴다.
+// => 아규먼트가 primitive data type인 경우,
+//    메서드를 호출할 때 값을 넘긴다.
 // => 자바에서는 primitive data type에 대해서 
-//    메모리 주소를 넘기는 방법이 없다.
+//    메모리(변수) 주소를 넘기는 방법이 없다.
 // 

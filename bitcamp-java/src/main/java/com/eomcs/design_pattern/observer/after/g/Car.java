@@ -44,8 +44,6 @@ public class Car {
   public void stop() {
     System.out.println("시동을 끈다.");
 
-    // 자동차의 시동을 끄면,
-    // 등록된 관찰자들에게 보고한다.
     notifyObserversOnStopped();
   }
 

@@ -1,30 +1,33 @@
-// 초기화 블록 - 초기화 순서
+// 스태틱 초기화 블록(static initializer) - 클래스 메서드 사용
 package com.eomcs.oop.ex03;
 
 public class Exam0630 {
-    
-    static class A {
-        // 3) 생성자 실행
-        A() {
-            a = 300;
-        }
-        
-        // 2) 인스턴스 블록 실행 
-        {
-            a = 200;
-        }
-        
-        // 1) 인스턴스 변수 생성 및 할당 연산자 실행(초기화 문장 실행)
-        int a = 100;
+
+  public static class A {
+    static int a;
+
+    static void m() {}
+
+    // 클래스가 로딩될 때 스태틱 초기화 블록은 실행된다.
+    // 여러 개의 스태틱 블록이 있을 때, 컴파일러는 한 개의 블록으로 합친다.
+    // - 바이트코드(Exam0630$A.class)를 확인해 보라.
+    //
+    static {
+      System.out.println("Static{} 11111");
     }
-    
-    public static void main(String[] args) {
-        A obj1 = new A();
-        System.out.println(obj1.a);
+
+    static {
+      System.out.println("Static{} 22222");
     }
+  }
+
+  public static void main(String[] args) throws Exception {
+
+    // 클래스가 로딩되는 경우,
+    // 2) 클래스 멤버(필드와 메서드)를 최초로 사용할 때
+    A.m();
+    System.out.println("종료!");
+  }
 }
-
-
-
 
 

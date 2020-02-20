@@ -1,37 +1,40 @@
-package com.eomcs.util;
+package com.eomcs.algorithm.data_structure.linkedlist;
 
 public class LinkedList {
-
+  
   Node first;
+  
   Node last;
+  
   int size;
-
+  
   public void add(Object value) {
-
     Node newNode = new Node();
-    newNode.value=value;
-
-    if(first == null) {
-      last=first=newNode;
-    }else {
-      last.next = newNode;
-      last=newNode;
-    }
-    size++;     //add했으니 size증가
-  }
-
-  public Object get(int index) {
-    if(index < 0 ||index >= size) 
-      return null;
-
-    Node cursor = first;
-    for(int i =0; i < index; i++) {
-      cursor=cursor.next;
-    }
-    return cursor.value;
+    newNode.value = value;
     
+    if (first == null) {
+      last = first = newNode;
+    } else {
+      last.next = newNode;
+      last = newNode;
+    }
+    
+    this.size++;
   }
-  static class Node{
+  
+  public Object get(int index) {
+    if (index < 0 || index >= size)
+      return null;
+    
+    Node cursor = first;
+    for (int i = 0; i < index; i++) {
+      cursor = cursor.next;
+    }
+    
+    return cursor.value;
+  }
+  
+  static class Node {
     Object value;
     Node next;
   }

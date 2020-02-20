@@ -1,10 +1,10 @@
-package com.eomcs.util;
+package com.eomcs.algorithm.data_structure.stack;
 
 public class StackTest {
 
   public static void main(String[] args) {
     
-    Stack stack = new Stack();
+    Stack<String> stack = new Stack<>();
     
     stack.push("aaa");
     stack.push("bbb");

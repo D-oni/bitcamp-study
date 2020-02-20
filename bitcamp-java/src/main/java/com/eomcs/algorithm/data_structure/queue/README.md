@@ -6,6 +6,6 @@
 - 4) poll() 추가
 - 5) Object의 clone() 메서드 재정의 : shallow copy 
 - 6) Object의 clone() 메서드 변경 : deep copy
-- 12) 제네릭 적용
+- 7) 제네릭 적용
 
 

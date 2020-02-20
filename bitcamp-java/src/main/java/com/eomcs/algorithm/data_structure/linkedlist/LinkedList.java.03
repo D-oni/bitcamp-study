@@ -1,18 +1,15 @@
-package com.eomcs.util;
+package com.eomcs.algorithm.data_structure.linkedlist;
 
 public class LinkedList {
   
   Node first;
+  
   Node last;
+  
   int size;
   
-  public void add(Object value) {
-    if()
-  }
-  static class Node{
+  static class Node {
     Object value;
     Node next;
-    
   }
-
 }

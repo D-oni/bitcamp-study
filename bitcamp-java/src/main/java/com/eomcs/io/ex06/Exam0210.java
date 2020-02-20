@@ -7,8 +7,8 @@ import java.io.FileOutputStream;
 public class Exam0210 {
 
   public static void main(String[] args) throws Exception {
-    FileInputStream in = new FileInputStream("temp/jls11.jpg");
-    FileOutputStream out = new FileOutputStream("temp/jls11_2.jpg");
+    FileInputStream in = new FileInputStream("temp/jls11.pdf");
+    FileOutputStream out = new FileOutputStream("temp/jls11_2.pdf");
 
     int b;
 

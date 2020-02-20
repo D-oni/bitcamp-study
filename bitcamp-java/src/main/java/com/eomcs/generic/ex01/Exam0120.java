@@ -24,7 +24,6 @@ public class Exam0120 {
 
     // 특징 2: 제네릭을 지정하면 그와 관련된 메서드의 타입 정보가 자동으로 바뀐다.
     // => 형변환하는 번거로움이 없다.
-    
     Member member = list.get(0);
     System.out.println(member.name);
     System.out.println(member.age);

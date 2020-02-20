@@ -1,6 +1,0 @@
-package com.ohoracs.basic.ex01;
-
-//소스파일명과 클래스명
-//클래스명과 파일명이 일치하지 않아도 된다.
-//하지만 공개클래스의 경우 클래스명과 파일명이 일치해야한다.
-public class Exam22x {}

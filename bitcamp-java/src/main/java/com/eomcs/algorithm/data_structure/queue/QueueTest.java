@@ -4,7 +4,7 @@ public class QueueTest {
 
   public static void main(String[] args) {
     
-    Queue q = new Queue();
+    Queue<String> q = new Queue<>();
     
     q.offer("aaa");
     q.offer("bbb");

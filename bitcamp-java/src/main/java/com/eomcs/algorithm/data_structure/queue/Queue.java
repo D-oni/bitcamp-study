@@ -1,5 +1,7 @@
 package com.eomcs.algorithm.data_structure.queue;
 
+import com.eomcs.algorithm.data_structure.linkedlist.LinkedList;
+
 public class Queue<E> extends LinkedList<E> implements Cloneable {
   
   public void offer(E value) {
@@ -52,6 +54,7 @@ public class Queue<E> extends LinkedList<E> implements Cloneable {
     return temp;
   }
 }
+
 
 
 

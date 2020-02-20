@@ -20,10 +20,12 @@ public class Test01 {
     car.run();
 
     car.stop();
+
     // 업그레이드를 수행한 다음 시간이 지난 후
     // 5) 시동 끌 때 썬루프를 자동으로 닫기
-    // => Car의 stop() 메서드에 해당 코드 추가
-
+    // => 썬루프 자동으로 닫는 옵저버(SunRoofCloseCarObserver)를 정의한다.
+    // => Car 객체에 등록한다.
+    //
   }
 
 }
