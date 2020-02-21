@@ -1,7 +1,7 @@
 package com.eomcs.lms.servlet;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.PrintStream;
+import java.util.Scanner;
 import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
 
@@ -18,15 +18,52 @@ public class LessonUpdateServlet implements Servlet {
   }
 
   @Override
-  public void service(ObjectInputStream in, ObjectOutputStream out) throws Exception {
-    Lesson lesson = (Lesson) in.readObject();
+  public void service(Scanner in, PrintStream out) throws Exception {
+
+    out.println("번호? ");
+    out.println("!{}!");
+    out.flush();
+    int no = Integer.parseInt(in.nextLine());
+
+    Lesson old = lessonDao.findByNo(no);
+
+    if (old == null) {
+      out.println("해당 번호의 게시글이 없습니다.");
+      return;
+    }
+    Lesson lesson = new Lesson();
+
+    lesson.setNo(no);
+    out.printf("수업명(%s)? \n", old.getTitle());
+    out.println("!{}!");
+    out.flush();
+
+    out.printf("설명? \n", old.getTitle());
+    out.println("!{}!");
+    out.flush();
+
+    out.printf("시작일(%s)? \n", old.getStartDate());
+    out.println("!{}!");
+    out.flush();
+
+    out.printf("종료일(%s)? ", old.getEndDate());
+    out.println("!{}!");
+    out.flush();
+
+    out.printf("총수업시간(%d)? ", old.getTotalHours());
+    out.println("!{}!");
+    out.flush();
+
+    out.printf("일수업시간(%d)? ", old.getDayHours());
+    out.println("!{}!");
+    out.flush();
+
 
     if (lessonDao.update(lesson) > 0) {
-      out.writeUTF("OK");
+      out.println("강의를 변경했습니다.");
 
     } else {
-      out.writeUTF("FAIL");
-      out.writeUTF("해당 번호의 수업이 없습니다.");
+      out.println("해당 번호의 수업이 없습니다.");
     }
   }
 }

@@ -2,13 +2,14 @@
 package com.eomcs.lms;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -94,10 +95,7 @@ public class ServerApp {
     servletMap.put("/member/update", new MemberUpdateServlet(memberDao));
     servletMap.put("/member/delete", new MemberDeleteServlet(memberDao));
 
-    try (
-        // 서버쪽 연결 준비
-        // => 클라이언트의 연결을 9999번 포트에서 기다린다.
-        ServerSocket serverSocket = new ServerSocket(9999)) {
+    try (ServerSocket serverSocket = new ServerSocket(9999)) {
 
       System.out.println("클라이언트 연결 대기중...");
 
@@ -105,12 +103,6 @@ public class ServerApp {
         Socket socket = serverSocket.accept();
         System.out.println("클라이언트와 연결되었음!");
 
-        // 스레드풀을 사용할 때는 직접 스레드를 만들지 않는다.
-        // 단지 스레드풀에 "스레드가 실행할 코드(Runnable 구현체)"를 제출한다.
-        // => ExecutorService.submit(new Runnable() {...});
-        // => 스레드풀에 스레드가 없으면 새로 만들어 Runnable 구현체를 실행한다.
-        // => 스레드풀에 스레드가 있으면 그 스레드를 이용하여 Runnable 구현체를 실행한다.
-        //
         executorService.submit(() -> {
           processRequest(socket);
           System.out.println("--------------------------------------");
@@ -134,39 +126,40 @@ public class ServerApp {
   int processRequest(Socket clientSocket) {
 
     try (Socket socket = clientSocket;
-        ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream())) {
+        Scanner in = new Scanner(socket.getInputStream());
+        PrintStream out = new PrintStream(socket.getOutputStream())) {
 
-      System.out.println("통신을 위한 입출력 스트림을 준비하였음!");
+      // 클라이언트가 보낸 명령을 읽는다.
+      String request = in.nextLine();
+      System.out.printf("=> %s\n", request);
 
-      String request = in.readUTF();
-      System.out.println("클라이언트가 보낸 메시지를 수신하였음!");
-
-      if (request.equalsIgnoreCase("/server/stop")) {
-        quit(out);
-        return 9; // 서버를 종료한다.
-      }
+      // 클라이언트에게 응답한다.
+      // if (request.equalsIgnoreCase("/server/stop")) {
+      // return 9; // 서버를 종료한다. }
+      // }
 
       // 클라이언트의 요청을 처리할 객체를 찾는다.
       Servlet servlet = servletMap.get(request);
 
       if (servlet != null) {
-        // 클라이언트 요청을 처리할 객체를 찾았으면 작업을 실행시킨다.
         try {
+          // 클라이언트 요청을 처리할 객체를 찾았으면 작업을 실행시킨다.
           servlet.service(in, out);
 
         } catch (Exception e) {
-          // 요청한 작업을 수행하다가 오류 발생할 경우 그 이유를 간단히 응답한다.
-          out.writeUTF("FAIL");
-          out.writeUTF(e.getMessage());
+          // 요청한 작업을 수행하다가 오류 발생할 경우
+          // 그 이유를 간단히 응답한다.
+          out.println("요청 처리 중 오류 발생!");
+          out.println(e.getMessage());
 
           // 서버쪽 화면에는 더 자세하게 오류 내용을 출력한다.
           System.out.println("클라이언트 요청 처리 중 오류 발생:");
           e.printStackTrace();
         }
-      } else { // 없다면? 간단한 아내 메시지를 응답한다.
+      } else { // 없다면? 간단한 안내 메시지를 응답한다.
         notFound(out);
       }
+      out.println("!end!");
       out.flush();
       System.out.println("클라이언트에게 응답하였음!");
 
@@ -179,9 +172,8 @@ public class ServerApp {
     }
   }
 
-  private void notFound(ObjectOutputStream out) throws IOException {
-    out.writeUTF("FAIL");
-    out.writeUTF("요청한 명령을 처리할 수 없습니다.");
+  private void notFound(PrintStream out) throws IOException {
+    out.println("요청한 명령을 처리할 수 없습니다.");
   }
 
   private void quit(ObjectOutputStream out) throws IOException {
