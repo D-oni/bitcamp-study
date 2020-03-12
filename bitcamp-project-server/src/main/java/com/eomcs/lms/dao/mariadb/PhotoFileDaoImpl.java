@@ -1,12 +1,19 @@
 package com.eomcs.lms.dao.mariadb;
 
+<<<<<<< HEAD
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+=======
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
 import java.util.List;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.PhotoFileDao;
+import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
+<<<<<<< HEAD
 import com.eomcs.util.ConnectionFactory;
 
 public class PhotoFileDaoImpl implements PhotoFileDao {
@@ -28,11 +35,30 @@ public class PhotoFileDaoImpl implements PhotoFileDao {
               + "')");
 
       return result;
+=======
+
+public class PhotoFileDaoImpl implements PhotoFileDao {
+
+  SqlSessionFactory sqlSessionFactory;
+
+  public PhotoFileDaoImpl( //
+      SqlSessionFactory sqlSessionFactory) {
+    this.sqlSessionFactory = sqlSessionFactory;
+  }
+
+  @Override
+  public int insert(PhotoBoard photoBoard) throws Exception {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      int count = sqlSession.insert(//
+          "PhotoFileMapper.insertPhotoFile", photoBoard);
+      return count;
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
     }
   }
 
   @Override
   public List<PhotoFile> findAll(int boardNo) throws Exception {
+<<<<<<< HEAD
     try (Connection con = conFactory.getConnection(); //
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery( //
@@ -49,17 +75,29 @@ public class PhotoFileDaoImpl implements PhotoFileDao {
             .setBoardNo(rs.getInt("photo_id")));
       }
       return list;
+=======
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectList(//
+          "PhotoFileMapper.selectPhotoFile", boardNo);
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
     }
   }
 
   @Override
   public int deleteAll(int boardNo) throws Exception {
+<<<<<<< HEAD
     try (Connection con = conFactory.getConnection(); //
         Statement stmt = con.createStatement()) {
       int result = stmt.executeUpdate( //
           "delete from lms_photo_file" //
               + " where photo_id=" + boardNo);
       return result;
+=======
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      int count = sqlSession.delete(//
+          "PhotoFileMapper.deletePhotoFile", boardNo);
+      return count;
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
     }
   }
 

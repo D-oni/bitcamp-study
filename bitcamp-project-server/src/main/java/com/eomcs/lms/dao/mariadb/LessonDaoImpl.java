@@ -1,12 +1,19 @@
 package com.eomcs.lms.dao.mariadb;
 
+<<<<<<< HEAD
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+=======
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
 import java.util.List;
+import java.util.Map;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
+<<<<<<< HEAD
 import com.eomcs.util.ConnectionFactory;
 
 public class LessonDaoImpl implements LessonDao {
@@ -15,10 +22,21 @@ public class LessonDaoImpl implements LessonDao {
 
   public LessonDaoImpl(ConnectionFactory conFactory) {
     this.conFactory = conFactory;
+=======
+
+public class LessonDaoImpl implements LessonDao {
+
+  SqlSessionFactory sqlSessionFactory;
+
+  public LessonDaoImpl( //
+      SqlSessionFactory sqlSessionFactory) {
+    this.sqlSessionFactory = sqlSessionFactory;
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
   }
 
   @Override
   public int insert(Lesson lesson) throws Exception {
+<<<<<<< HEAD
     try (Connection con = conFactory.getConnection(); //
         Statement stmt = con.createStatement()) {
 
@@ -28,11 +46,17 @@ public class LessonDaoImpl implements LessonDao {
               + lesson.getTotalHours() + ", " + lesson.getDayHours() + ", '" + lesson.getTitle()
               + "', '" + lesson.getDescription() + "')");
       return result;
+=======
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      int count = sqlSession.insert("LessonMapper.insertLesson", lesson);
+      return count;
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
     }
   }
 
   @Override
   public List<Lesson> findAll() throws Exception {
+<<<<<<< HEAD
     try (Connection con = conFactory.getConnection(); //
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery( //
@@ -53,11 +77,16 @@ public class LessonDaoImpl implements LessonDao {
       }
 
       return list;
+=======
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectList("LessonMapper.selectLesson");
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
     }
   }
 
   @Override
   public Lesson findByNo(int no) throws Exception {
+<<<<<<< HEAD
     try (Connection con = conFactory.getConnection(); //
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery( //
@@ -78,11 +107,16 @@ public class LessonDaoImpl implements LessonDao {
       } else {
         return null;
       }
+=======
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectOne("LessonMapper.selectDetail", no);
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
     }
   }
 
   @Override
   public int update(Lesson lesson) throws Exception {
+<<<<<<< HEAD
     try (Connection con = conFactory.getConnection(); //
         Statement stmt = con.createStatement()) {
 
@@ -96,18 +130,36 @@ public class LessonDaoImpl implements LessonDao {
           + " where lesson_id=" + lesson.getNo());
 
       return result;
+=======
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      int count = sqlSession.update("LessonMapper.updateLesson", lesson);
+      return count;
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
     }
   }
 
   @Override
   public int delete(int no) throws Exception {
+<<<<<<< HEAD
     try (Connection con = conFactory.getConnection(); //
         Statement stmt = con.createStatement()) {
 
       int result = stmt.executeUpdate("delete from lms_lesson where lesson_id=" + no);
 
       return result;
+=======
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      int count = sqlSession.delete("LessonMapper.deleteLesson", no);
+      return count;
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
     }
   }
+  @Override
+  public List<Lesson> findByKeyword(Map<String,Object> params) throws Exception {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectList("LessonMapper.selectLesson",params);
+    }
+  }
+
 
 }

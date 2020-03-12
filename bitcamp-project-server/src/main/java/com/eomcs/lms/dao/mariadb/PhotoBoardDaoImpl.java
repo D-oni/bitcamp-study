@@ -1,13 +1,18 @@
 package com.eomcs.lms.dao.mariadb;
 
+<<<<<<< HEAD
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+=======
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
 import java.util.List;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.PhotoBoardDao;
-import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.domain.PhotoBoard;
+<<<<<<< HEAD
 import com.eomcs.util.ConnectionFactory;
 
 public class PhotoBoardDaoImpl implements PhotoBoardDao {
@@ -16,10 +21,21 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
 
   public PhotoBoardDaoImpl(ConnectionFactory conFactory) {
     this.conFactory = conFactory;
+=======
+
+public class PhotoBoardDaoImpl implements PhotoBoardDao {
+
+  SqlSessionFactory sqlSessionFactory;
+
+  public PhotoBoardDaoImpl( //
+      SqlSessionFactory sqlSessionFactory) {
+    this.sqlSessionFactory = sqlSessionFactory;
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
   }
 
   @Override
   public int insert(PhotoBoard photoBoard) throws Exception {
+<<<<<<< HEAD
     try (Connection con = conFactory.getConnection(); //
         Statement stmt = con.createStatement()) {
 
@@ -40,11 +56,18 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
       }
 
       return result;
+=======
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      int count = sqlSession.insert(//
+          "PhotoBoardMapper.insertPhotoBoard", photoBoard);
+      return count;
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
     }
   }
 
   @Override
   public List<PhotoBoard> findAllByLessonNo(int lessonNo) throws Exception {
+<<<<<<< HEAD
     try (Connection con = conFactory.getConnection(); //
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery( //
@@ -66,11 +89,17 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
       }
 
       return list;
+=======
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectList(//
+          "PhotoBoardMapper.selectPhotoBoard", lessonNo);
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
     }
   }
 
   @Override
   public PhotoBoard findByNo(int no) throws Exception {
+<<<<<<< HEAD
     try (Connection con = conFactory.getConnection(); //
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery( //
@@ -106,11 +135,16 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
       } else {
         return null;
       }
+=======
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectOne("PhotoBoardMapper.selectDetail", no);
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
     }
   }
 
   @Override
   public int update(PhotoBoard photoBoard) throws Exception {
+<<<<<<< HEAD
     try (Connection con = conFactory.getConnection(); //
         Statement stmt = con.createStatement()) {
       int result = stmt.executeUpdate( //
@@ -118,17 +152,29 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
               + photoBoard.getTitle() //
               + "' where photo_id=" + photoBoard.getNo());
       return result;
+=======
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      int count = sqlSession.update(//
+          "PhotoBoardMapper.updatePhotoBoard", photoBoard);
+      return count;
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
     }
   }
 
   @Override
   public int delete(int no) throws Exception {
+<<<<<<< HEAD
     try (Connection con = conFactory.getConnection(); //
         Statement stmt = con.createStatement()) {
       int result = stmt.executeUpdate( //
           "delete from lms_photo" //
               + " where photo_id=" + no);
       return result;
+=======
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      int count = sqlSession.delete("PhotoBoardMapper.deletePhotoBoard", no);
+      return count;
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
     }
   }
 
