@@ -6,17 +6,31 @@ import java.util.List;
 import java.util.Scanner;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
+<<<<<<< HEAD
 import com.eomcs.lms.service.PhotoBoardService;
+=======
+>>>>>>> 81c676cdd8bbf48520b950703bd4f8005004938e
 import com.eomcs.util.Prompt;
 
 public class PhotoBoardUpdateServlet implements Servlet {
 
+<<<<<<< HEAD
   // 트랜잭션 관리자를 이용하여 작업을 실행시켜줄 도우미 객체
   PhotoBoardService photoBoardService;
 
   public PhotoBoardUpdateServlet(PhotoBoardService photoBoardService) {
 
     this.photoBoardService = photoBoardService;
+=======
+  PhotoBoardDao photoBoardDao;
+  PhotoFileDao photoFileDao;
+
+  public PhotoBoardUpdateServlet( //
+      PhotoBoardDao photoBoardDao, //
+      PhotoFileDao photoFileDao) {
+    this.photoBoardDao = photoBoardDao;
+    this.photoFileDao = photoFileDao;
+>>>>>>> 81c676cdd8bbf48520b950703bd4f8005004938e
   }
 
   @Override
@@ -47,8 +61,57 @@ public class PhotoBoardUpdateServlet implements Servlet {
     if (response.equalsIgnoreCase("y")) {
       photoBoard.setFiles(inputPhotoFiles(in, out));
     }
+<<<<<<< HEAD
     photoBoardService.update(photoBoard);
     out.println("사진 게시글을 변경했습니다.");
+=======
+
+    try {
+      if (photoBoardDao.update(photoBoard) == 0) {
+        throw new Exception("사진 게시글 변경에 실패했습니다.");
+      }
+<<<<<<< HEAD
+
+      printPhotoFiles(out, no);
+
+      out.println();
+      out.println("사진은 일부만 변경할 수 없습니다.");
+      out.println("전체를 새로 등록해야 합니다.");
+
+      String response = Prompt.getString(in, out, //
+          "사진을 변경하시겠습니까?(y/N) ");
+
+      if (response.equalsIgnoreCase("y")) {
+
+        // 이 사진 게시글에 첨부되었은 기존 파일을 모두 삭제한다.
+        photoFileDao.deleteAll(no);
+
+        List<PhotoFile> photoFiles = inputPhotoFiles(in, out);
+
+        for (PhotoFile photoFile : photoFiles) {
+          photoFile.setBoardNo(no);
+          photoFileDao.insert(photoFile);
+        }
+      }
+      out.println("사진 게시글을 변경했습니다.");
+
+    } catch (Exception e) {
+      out.println(e.getMessage());
+
+    }
+=======
+
+      if(photoBoard.getFiles() != null) {
+        //첨부파일을 변경한다면,
+        photoFileDao.deleteAll(no);
+        photoFileDao.insert(photoBoard);
+      }
+
+        out.println("사진 게시글을 변경했습니다.");
+      return null;
+    });
+>>>>>>> cbf19149218ccad337991d6d834c62e0c604d922
+>>>>>>> 81c676cdd8bbf48520b950703bd4f8005004938e
   }
 
   private void printPhotoFiles(PrintStream out, PhotoBoard photoBoard) throws Exception {

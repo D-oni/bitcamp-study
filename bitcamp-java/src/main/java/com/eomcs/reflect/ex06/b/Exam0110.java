@@ -2,6 +2,10 @@ package com.eomcs.reflect.ex06.b;
 
 import java.lang.reflect.Proxy;
 
+<<<<<<< HEAD
+=======
+// 호출되는 메서드를 알아내는 방법
+>>>>>>> 81c676cdd8bbf48520b950703bd4f8005004938e
 public class Exam0110 {
   public static void main(String[] args) {
 

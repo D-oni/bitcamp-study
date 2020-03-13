@@ -2,6 +2,10 @@ package com.eomcs.reflect.ex06.a;
 
 import java.lang.reflect.Proxy;
 
+<<<<<<< HEAD
+=======
+// Proxy 객체를 만드는 방법
+>>>>>>> 81c676cdd8bbf48520b950703bd4f8005004938e
 public class Exam0110 {
   public static void main(String[] args) {
 

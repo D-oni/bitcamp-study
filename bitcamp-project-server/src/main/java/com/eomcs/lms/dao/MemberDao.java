@@ -23,9 +23,12 @@ public interface MemberDao {
   default List<Member> findByKeyword(String keyword) throws Exception {
     return null;
   }
+<<<<<<< HEAD
   default Member findByEmailAndPassword(Map<String,Object> params) throws Exception {
     return null;
   }
+=======
+>>>>>>> 81c676cdd8bbf48520b950703bd4f8005004938e
 }
 
 
