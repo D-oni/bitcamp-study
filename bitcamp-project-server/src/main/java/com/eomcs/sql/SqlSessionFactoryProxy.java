@@ -8,42 +8,46 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.TransactionIsolationLevel;
 
 public class SqlSessionFactoryProxy implements SqlSessionFactory {
+
   SqlSessionFactory originalFactory;
 
-  //SqlSession을 스레드에 보관할 저장소를 준비한다.
-  ThreadLocal<SqlSession> sqlSessionLocal = new ThreadLocal();
+  // SqlSession을 스레드에 보관할 저장소를 준비한다.
+  ThreadLocal<SqlSession> sqlSessionLocal = new ThreadLocal<>();
+
   public SqlSessionFactoryProxy(SqlSessionFactory originalFactory) {
     this.originalFactory = originalFactory;
   }
 
-  @Override
-  public SqlSession openSession() {
-    //기본으로 자동 커밋으로 동작하는 SqlSession을 만들어 리턴한다.
-    return this.openSession(true);
+  // 스레드 작업이 끝난 후 SqlSession 객체를 제거하고 닫는다.
+  public void closeSession() {
+    // 스레드에서 꺼낸다.
+    SqlSession sqlSession = sqlSessionLocal.get();
+    if (sqlSession != null) {
+      sqlSessionLocal.remove(); // 스레드에서 제거
+      // 이제 진짜로 SqlSession을 닫는다.
+      ((SqlSessionProxy) sqlSession).realClose();
+    }
   }
 
-  //스레드 작업이 끝난 후 SqlSession 객체를 제거하고 닫는다.
-  public void closeSession() {
-    //스레드에서 꺼낸다.
-    SqlSession sqlSession = sqlSessionLocal.get();
-    if(sqlSession != null) {
-      sqlSessionLocal.remove(); //스레드에서 제거
-      ((SqlSessionProxy)sqlSession).realClose();   //SqlSession닫기
-    }
+  @Override
+  public SqlSession openSession() {
+    // 기본으로 자동 커밋으로 동작하는 SqlSession을 만들어 리턴한다.
+    return this.openSession(true);
   }
 
   @Override
   public SqlSession openSession(boolean autoCommit) {
-    //스레드에 보관 된 것을 꺼낸다.
+    // 스레드에 보관된 것을 꺼낸다.
     SqlSession sqlSession = sqlSessionLocal.get();
 
-    if(sqlSession==null) {
-      //스레드에 보관 된 게 없다면 새로 만든다.
+    if (sqlSession == null) {
+      // 스레드에 보관된 게 없다면 새로 만든다.
       sqlSession = new SqlSessionProxy(originalFactory.openSession(autoCommit));
 
-      //나중에 다른 곳에서 사용하도록 스레드에 보관한다.
+      // 나중에 다른 곳에서 사용하도록 스레드에 보관한다.
       sqlSessionLocal.set(sqlSession);
     }
+
     return sqlSession;
   }
 
@@ -81,5 +85,6 @@ public class SqlSessionFactoryProxy implements SqlSessionFactory {
   public Configuration getConfiguration() {
     return originalFactory.getConfiguration();
   }
+
 
 }

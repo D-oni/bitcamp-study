@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.eomcs.dao.PhotoFileDao">
+<mapper namespace="com.eomcs.lms.dao.PhotoFileDao">
 
   <resultMap type="PhotoFile" id="PhotoFileMap">
     <id column="photo_file_id"   property="no"/>
@@ -14,8 +14,8 @@
   <insert id="insert" parameterType="PhotoBoard">
     insert into lms_photo_file(photo_id,file_path) 
     values
-    <foreach collection = "files" item="file" separator=",">
-    (#{no}, #{file.filepath})
+    <foreach collection="files" item="file" separator=",">
+      (#{no}, #{file.filepath})
     </foreach>
   </insert>
   

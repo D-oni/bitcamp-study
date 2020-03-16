@@ -20,9 +20,9 @@ public interface LessonDao {
 
   int delete(int no) throws Exception;
 
-  default List<Lesson> findByKeyword(Map<String,Object> params) throws Exception {
-  return null;
-}
+  default List<Lesson> findByKeyword(Map<String, Object> params) throws Exception {
+    return null;
+  }
 }
 
 

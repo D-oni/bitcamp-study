@@ -4,16 +4,17 @@ import java.io.PrintStream;
 import java.util.Scanner;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
+import com.eomcs.util.Component;
 import com.eomcs.util.Prompt;
 
+@Component("/member/add")
 public class MemberAddServlet implements Servlet {
 
- MemberService memberService;
+  MemberService memberService;
 
   public MemberAddServlet(MemberService memberService) {
     this.memberService = memberService;
   }
-
 
   @Override
   public void service(Scanner in, PrintStream out) throws Exception {

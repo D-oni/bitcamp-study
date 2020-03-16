@@ -4,8 +4,10 @@ import java.io.PrintStream;
 import java.util.Scanner;
 import com.eomcs.lms.domain.Board;
 import com.eomcs.lms.service.BoardService;
+import com.eomcs.util.Component;
 import com.eomcs.util.Prompt;
 
+@Component("/board/detail")
 public class BoardDetailServlet implements Servlet {
 
   BoardService boardService;
@@ -14,12 +16,11 @@ public class BoardDetailServlet implements Servlet {
     this.boardService = boardService;
   }
 
-
   @Override
   public void service(Scanner in, PrintStream out) throws Exception {
     int no = Prompt.getInt(in, out, "번호? ");
 
-    Board board = boardService.findByNo(no);
+    Board board = boardService.get(no);
 
     if (board != null) {
       out.printf("번호: %d\n", board.getNo());

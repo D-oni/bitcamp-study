@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Scanner;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
+import com.eomcs.util.Component;
 
+@Component("/member/list")
 public class MemberListServlet implements Servlet {
 
   MemberService memberService;
@@ -13,7 +15,6 @@ public class MemberListServlet implements Servlet {
   public MemberListServlet(MemberService memberService) {
     this.memberService = memberService;
   }
-
 
   @Override
   public void service(Scanner in, PrintStream out) throws Exception {

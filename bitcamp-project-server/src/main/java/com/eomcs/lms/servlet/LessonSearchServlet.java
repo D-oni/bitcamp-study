@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Scanner;
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.service.LessonService;
+import com.eomcs.util.Component;
 import com.eomcs.util.Prompt;
 
+@Component("/lesson/search")
 public class LessonSearchServlet implements Servlet {
 
   LessonService lessonService;
@@ -19,29 +21,33 @@ public class LessonSearchServlet implements Servlet {
 
   @Override
   public void service(Scanner in, PrintStream out) throws Exception {
-    HashMap<String,Object> params = new HashMap<>();
+    HashMap<String, Object> params = new HashMap<>();
     String keyword = Prompt.getString(in, out, "강의명 검색: ");
-    if(keyword.length() > 0) {
-      params.put("title" , keyword);
+    if (keyword.length() > 0) {
+      params.put("title", keyword);
     }
-    Date date= Prompt.getDate(in, out, "시작일 검색: ");
-    if(date != null) {
-      params.put("startDate" , date.toString());
+
+    Date date = Prompt.getDate(in, out, "시작일 검색: ");
+    if (date != null) {
+      params.put("startDate", date);
     }
-    date= Prompt.getDate(in, out, "강의 종료일 검색: ");
-    if(date != null) {
-      params.put("endDate" , date.toString());
+
+    date = Prompt.getDate(in, out, "종료일 검색: ");
+    if (date != null) {
+      params.put("endDate", date);
     }
-    int value= Prompt.getInt(in, out, "총 강의시간 검색: ");
-    if(value > 0) {
-      params.put("totalHours" , value);
+
+    int value = Prompt.getInt(in, out, "총강의시간 검색: ");
+    if (value > 0) {
+      params.put("totalHours", value);
     }
-    value= Prompt.getInt(in, out, "일 강의시간 검색: ");
-    if(value > 0) {
-      params.put("dayHours" , value);
+
+    value = Prompt.getInt(in, out, "일강의시간 검색: ");
+    if (value > 0) {
+      params.put("dayHours", value);
     }
-    out.println("----------------------");
-    out.println("[검색결과]");
+    out.println("------------------------------");
+    out.println("[검색 결과]");
     out.println();
 
     List<Lesson> lessons = lessonService.search(params);
@@ -51,3 +57,5 @@ public class LessonSearchServlet implements Servlet {
     }
   }
 }
+
+
