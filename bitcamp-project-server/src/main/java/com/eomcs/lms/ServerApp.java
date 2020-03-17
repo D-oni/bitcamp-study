@@ -14,9 +14,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.context.ApplicationContextListener;
-import com.eomcs.lms.servlet.Servlet;
 import com.eomcs.sql.SqlSessionFactoryProxy;
 import com.eomcs.util.ApplicationContext;
+import com.eomcs.util.RequestHandler;
+import com.eomcs.util.RequestMappingHandlerMapping;
 
 public class ServerApp {
 
@@ -32,6 +33,8 @@ public class ServerApp {
 
   // IoC 컨테이너 준비
   ApplicationContext iocContainer;
+
+  RequestMappingHandlerMapping handlerMapper;
 
   public void addApplicationContextListener(ApplicationContextListener listener) {
     listeners.add(listener);
@@ -61,9 +64,11 @@ public class ServerApp {
     // ApplicationContext (IoC 컨테이너)를 꺼낸다.
     iocContainer = (ApplicationContext) context.get("iocContainer");
 
+    handlerMapper = (RequestMappingHandlerMapping) context.get("handlerMapper");
+
     // IoC 컨테이너에서 SqlSessionFactory를 꺼낸다.
-    SqlSessionFactory sqlSessionFactory = //
-        (SqlSessionFactory) iocContainer.getBean("sqlSessionFactory");
+    SqlSessionFactory sqlSessionFactory = null;//
+    // (SqlSessionFactory) iocContainer.getBean("sqlSessionFactory");
 
     try (ServerSocket serverSocket = new ServerSocket(9999)) {
 
@@ -140,12 +145,17 @@ public class ServerApp {
         return;
       }
 
-      Servlet servlet = (Servlet) iocContainer.getBean(request);
+      RequestHandler requestHandler = handlerMapper.getHandler(request);
 
-      if (servlet != null) {
+
+//      Object servlet = null;
+      // (Servlet) iocContainer.getBean(request);
+
+      if(requestHandler != null) {
         try {
-          servlet.service(in, out);
+//          servlet.service(in, out);
 
+          requestHandler.getMethod().invoke(requestHandler.getBean(),in,out);
         } catch (Exception e) {
           out.println("요청 처리 중 오류 발생!");
           out.println(e.getMessage());
