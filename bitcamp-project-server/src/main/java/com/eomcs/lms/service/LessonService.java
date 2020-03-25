@@ -1,7 +1,7 @@
 package com.eomcs.lms.service;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import com.eomcs.lms.domain.Lesson;
 
 public interface LessonService {
@@ -13,7 +13,7 @@ public interface LessonService {
 
   List<Lesson> list() throws Exception;
 
-  List<Lesson> search(HashMap<String, Object> params) throws Exception;
+  List<Lesson> search(Map<String, Object> params) throws Exception;
 
   int update(Lesson lesson) throws Exception;
 }
