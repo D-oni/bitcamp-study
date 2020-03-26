@@ -1,7 +1,7 @@
 package com.eomcs.lms.servlet;
 
 import java.io.PrintStream;
-import java.util.Scanner;
+import java.util.Map;
 import org.springframework.stereotype.Component;
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.service.LessonService;
@@ -18,7 +18,7 @@ public class LessonUpdateServlet {
   }
 
   @RequestMapping("/lesson/update")
-  public void service(Scanner in, PrintStream out) throws Exception {
+  public void service(Map<String, String> params, PrintStream out) throws Exception {
 
     int no = Prompt.getInt(in, out, "번호? ");
 

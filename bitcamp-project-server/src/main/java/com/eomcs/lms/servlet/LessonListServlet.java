@@ -33,8 +33,7 @@ public class LessonListServlet {
     out.println("    <th>번호</th>");
     out.println("    <th>제목</th>");
     out.println("    <th>설명</th>");
-    out.println("    <th>시작일</th>");
-    out.println("    <th>종료일</th>");
+    out.println("    <th>기간</th>");
     out.println("    <th>총 수업시간</th>");
     out.println("    <th>일 수업시간</th>");
     out.println("  </tr>");
@@ -45,8 +44,7 @@ public class LessonListServlet {
           + "<td>%d</td>"
           + "<td><a href='/lesson/detail?no=%d'>%s</a></td>"//
           + " <td>%s</td> "
-          + "<td>%s</td>"
-          + "<td>%s</td>"
+          + "<td>%s~%s</td>"
           + "<td>%d</td>"
           + "<td>%d</td>"
           + "</tr>\n",
