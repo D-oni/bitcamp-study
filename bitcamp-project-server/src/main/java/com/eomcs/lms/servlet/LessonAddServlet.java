@@ -1,6 +1,6 @@
 package com.eomcs.lms.servlet;
 
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.Map;
 import org.springframework.stereotype.Component;
@@ -18,14 +18,14 @@ public class LessonAddServlet {
   }
 
   @RequestMapping("/lesson/add")
-  public void service(Map<String, String> params, PrintStream out) throws Exception {
+  public void service(Map<String, String> params, PrintWriter out) throws Exception {
     Lesson lesson = new Lesson();
     lesson.setTitle(params.get("title"));
     lesson.setDescription(params.get("description"));
-    lesson.setStartDate(Date.valueOf("startDate"));
-    lesson.setEndDate(Date.valueOf("endDate"));
-    lesson.setTotalHours(Integer.parseInt("totalHours"));
-    lesson.setDayHours(Integer.parseInt("dayHours"));
+    lesson.setStartDate(Date.valueOf(params.get("startDate")));
+    lesson.setEndDate(Date.valueOf(params.get("endDate")));
+    lesson.setTotalHours(Integer.parseInt(params.get("totalHours")));
+    lesson.setDayHours(Integer.parseInt(params.get("dayHours")));
 
     lessonService.add(lesson);
 
