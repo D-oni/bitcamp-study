@@ -27,11 +27,11 @@ public class BoardAddServlet {
     out.println("<head>");
     out.println("<meta charset='UTF-8'>");
     out.println("<meta http-equiv='refresh' content='2;url=/board/list'>");
-    out.println("<title>게시물 입력</title>");
+    out.println("<title>게시글 입력</title>");
     out.println("</head>");
     out.println("<body>");
     out.println("<h1>게시물 입력 결과</h1>");
-    out.println("<p>새 게시물을 등록했습니다.</p>");
+    out.println("<p>새 게시글을 등록했습니다.</p>");
     out.println("</body>");
     out.println("</html>");
   }

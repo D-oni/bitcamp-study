@@ -41,7 +41,7 @@ public class BoardListServlet {
     for (Board board : boards) {
       out.printf("  <tr>"//
           + "<td>%d</td> "//
-          + "<td><a href='/board/detail?no=%d'>%s</a></td>"//
+          + "<td><a href='/board/detail?no=%d'>%s</a></td> "//
           + "<td>%s</td> "//
           + "<td>%d</td>"//
           + "</tr>\n", //
