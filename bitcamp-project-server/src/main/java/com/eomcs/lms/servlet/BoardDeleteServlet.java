@@ -1,6 +1,6 @@
 package com.eomcs.lms.servlet;
 
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.Map;
 import org.springframework.stereotype.Component;
 import com.eomcs.lms.service.BoardService;
@@ -16,12 +16,20 @@ public class BoardDeleteServlet {
   }
 
   @RequestMapping("/board/delete")
+<<<<<<< HEAD
   public void service(Map<String, String> params, PrintStream out) throws Exception {
+=======
+  public void service(Map<String, String> params, PrintWriter out) throws Exception {
+>>>>>>> 02e44d21770baeefd7bfc8efdaa962f66a96d5b2
     out.println("<!DOCTYPE html>");
     out.println("<html>");
     out.println("<head>");
     out.println("<meta charset='UTF-8'>");
+<<<<<<< HEAD
     out.println("<meta http-equiv='refresh' content='2;url=/board/list'>");
+=======
+    out.println("<meta http-equiv='refresh' content='2;url='/board/list'>");
+>>>>>>> 02e44d21770baeefd7bfc8efdaa962f66a96d5b2
     out.println("<title>게시글 삭제</title>");
     out.println("</head>");
     out.println("<body>");

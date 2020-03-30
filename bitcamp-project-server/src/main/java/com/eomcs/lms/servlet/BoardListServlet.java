@@ -1,6 +1,6 @@
 package com.eomcs.lms.servlet;
 
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ public class BoardListServlet {
   }
 
   @RequestMapping("/board/list")
-  public void service(Map<String, String> params, PrintStream out) throws Exception {
+  public void service(Map<String, String> params, PrintWriter out) throws Exception {
 
     out.println("<!DOCTYPE html>");
     out.println("<html>");
@@ -52,6 +52,7 @@ public class BoardListServlet {
           board.getViewCount() //
       );
     }
+    out.println("</table>");
 
     out.println("</body>");
     out.println("</html>");
