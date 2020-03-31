@@ -1,70 +1,62 @@
 package com.eomcs.lms.servlet;
 
-<<<<<<< HEAD
-import java.io.PrintStream;
-import java.util.Scanner;
-=======
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.util.Map;
->>>>>>> 02e44d21770baeefd7bfc8efdaa962f66a96d5b2
-import org.springframework.stereotype.Component;
+
+import javax.servlet.GenericServlet;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebServlet;
+
+import org.springframework.context.ApplicationContext;
+
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.service.LessonService;
-import com.eomcs.util.Prompt;
-import com.eomcs.util.RequestMapping;
 
-@Component
-public class LessonAddServlet {
+@WebServlet("/lesson/add")
+public class LessonAddServlet extends GenericServlet {
 
-  LessonService lessonService;
+	private static final long serialVersionUID = 1L;
 
-  public LessonAddServlet(LessonService lessonService) {
-    this.lessonService = lessonService;
-  }
+	@Override
+	public void service(ServletRequest req, ServletResponse res)
+			throws ServletException, IOException {
+		try {
+			res.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = res.getWriter();
+			
+			 ServletContext servletContext = req.getServletContext();
+		      ApplicationContext iocContainer =
+		          (ApplicationContext) servletContext.getAttribute("iocContainer");
+		      LessonService lessonService = iocContainer.getBean(LessonService.class);
 
-  @RequestMapping("/lesson/add")
-<<<<<<< HEAD
-  public void service(Scanner in, PrintStream out) throws Exception {
-    Lesson lesson = new Lesson();
+			Lesson lesson = new Lesson();
+			lesson.setTitle(req.getParameter("title"));
+			lesson.setDescription(req.getParameter("description"));
+			lesson.setStartDate(Date.valueOf(req.getParameter("startDate")));
+			lesson.setEndDate(Date.valueOf(req.getParameter("endDate")));
+			lesson.setTotalHours(Integer.parseInt(req.getParameter("totalHours")));
+			lesson.setDayHours(Integer.parseInt(req.getParameter("dayHours")));
 
-    lesson.setTitle(Prompt.getString(in, out, "강의명? "));
-    lesson.setDescription(Prompt.getString(in, out, "내용? "));
-    lesson.setStartDate(Prompt.getDate(in, out, "강의 시작일? "));
-    lesson.setEndDate(Prompt.getDate(in, out, "강의 종료일? "));
-    lesson.setTotalHours(Prompt.getInt(in, out, "총 강의시간? "));
-    lesson.setDayHours(Prompt.getInt(in, out, "일 강의시간? "));
+			lessonService.add(lesson);
 
-    if (lessonService.add(lesson) > 0) {
-      out.println("강의를 저장했습니다.");
-
-    } else {
-      out.println("저장에 실패했습니다.");
-    }
-=======
-  public void service(Map<String, String> params, PrintWriter out) throws Exception {
-    Lesson lesson = new Lesson();
-    lesson.setTitle(params.get("title"));
-    lesson.setDescription(params.get("description"));
-    lesson.setStartDate(Date.valueOf(params.get("startDate")));
-    lesson.setEndDate(Date.valueOf(params.get("endDate")));
-    lesson.setTotalHours(Integer.parseInt(params.get("totalHours")));
-    lesson.setDayHours(Integer.parseInt(params.get("dayHours")));
-
-    lessonService.add(lesson);
-
-    out.println("<!DOCTYPE html>");
-    out.println("<html>");
-    out.println("<head>");
-    out.println("<meta charset='UTF-8'>");
-    out.println("<meta http-equiv='refresh' content='2;url=/lesson/list'>");
-    out.println("<title>강의 입력</title>");
-    out.println("</head>");
-    out.println("<body>");
-    out.println("<h1>강의 입력 결과</h1>");
-    out.println("<p>새 강의를 등록했습니다.</p>");
-    out.println("</body>");
-    out.println("</html>");
->>>>>>> 02e44d21770baeefd7bfc8efdaa962f66a96d5b2
-  }
+			out.println("<!DOCTYPE html>");
+			out.println("<html>");
+			out.println("<head>");
+			out.println("<meta charset='UTF-8'>");
+			out.println("<meta http-equiv='refresh' content='2;url=list'>");
+			out.println("<title>강의 입력</title>");
+			out.println("</head>");
+			out.println("<body>");
+			out.println("<h1>강의 입력 결과</h1>");
+			out.println("<p>새 강의를 등록했습니다.</p>");
+			out.println("</body>");
+			out.println("</html>");
+		} catch (Exception e) {
+			throw new ServletException(e);
+		}
+	}
 }

@@ -1,30 +1,40 @@
 package com.eomcs.lms.servlet;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
-import org.springframework.stereotype.Component;
+
+import javax.servlet.GenericServlet;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebServlet;
+
+import org.springframework.context.ApplicationContext;
+
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.service.LessonService;
 import com.eomcs.lms.service.PhotoBoardService;
-import com.eomcs.util.RequestMapping;
 
-@Component
-public class PhotoBoardListServlet {
+@WebServlet("/photoboard/list")
+public class PhotoBoardListServlet extends GenericServlet {
+	private static final long serialVersionUID = 1L;
 
-  PhotoBoardService photoBoardService;
-  LessonService lessonService;
+	@Override
+	public void service(ServletRequest req, ServletResponse res)
+			throws ServletException, IOException {
+		try {
+			res.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = res.getWriter();
 
-  public PhotoBoardListServlet(//
-      PhotoBoardService photoBoardService, //
-      LessonService lessonService) {
-    this.photoBoardService = photoBoardService;
-    this.lessonService = lessonService;
-  }
-
-  @RequestMapping("/photoboard/list")
-  public void service(Map<String, String> params, PrintWriter out) throws Exception {
+			ServletContext servletContext = req.getServletContext();
+			ApplicationContext iocContainer =
+					(ApplicationContext) servletContext.getAttribute("iocContainer");
+			LessonService lessonService = iocContainer.getBean(LessonService.class);
+			PhotoBoardService photoBoardService = iocContainer.getBean(PhotoBoardService.class);
+			
     out.println("<!DOCTYPE html>");
     out.println("<html>");
     out.println("<head>");
@@ -33,14 +43,14 @@ public class PhotoBoardListServlet {
     out.println("</head>");
     out.println("<body>");
     try {
-      int lessonNo = Integer.parseInt(params.get("lessonNo"));
+      int lessonNo = Integer.parseInt(req.getParameter("lessonNo"));
       Lesson lesson = lessonService.get(lessonNo);
       if (lesson == null) {
         throw new Exception("수업 번호가 유효하지 않습니다.");
       }
 
       out.printf("  <h1>강의 사진 - %s</h1>", lesson.getTitle());
-      out.printf("  <a href='/photoboard/addForm?lessonNo=%d'>새 사진</a><br>\n", //
+      out.printf("  <a href='addForm?lessonNo=%d'>새 사진</a><br>\n", //
           lessonNo);
       out.println("  <table border='1'>");
       out.println("  <tr>");
@@ -54,7 +64,7 @@ public class PhotoBoardListServlet {
       for (PhotoBoard photoBoard : photoBoards) {
         out.printf("  <tr>"//
             + "<td>%d</td> "//
-            + "<td><a href='/photoboard/detail?no=%d'>%s</a></td> "//
+            + "<td><a href='detail?no=%d'>%s</a></td> "//
             + "<td>%s</td> "//
             + "<td>%d</td>"//
             + "</tr>\n", //
@@ -72,5 +82,8 @@ public class PhotoBoardListServlet {
     }
     out.println("</body>");
     out.println("</html>");
+		} catch (Exception e) {
+			throw new ServletException(e);
+		}
   }
 }
