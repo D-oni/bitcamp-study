@@ -2,7 +2,6 @@ package com.eomcs.lms.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletContext;
@@ -12,10 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
-import com.eomcs.util.RequestMapping;
 
 @WebServlet("/member/detail")
 public class MemberDetailServlet extends GenericServlet {

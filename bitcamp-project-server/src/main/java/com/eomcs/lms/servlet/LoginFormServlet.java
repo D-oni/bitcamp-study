@@ -4,15 +4,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.GenericServlet;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
-import org.springframework.context.ApplicationContext;
 
-import com.eomcs.lms.service.LessonService;
 
 @WebServlet("/auth/loginForm")
 public class LoginFormServlet extends GenericServlet {
@@ -26,9 +23,6 @@ public class LoginFormServlet extends GenericServlet {
 			res.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = res.getWriter();
 
-			ServletContext servletContext = req.getServletContext();
-			ApplicationContext iocContainer =
-					(ApplicationContext) servletContext.getAttribute("iocContainer");
 
 			out.println("<!DOCTYPE html>");
 			out.println("<html>");
