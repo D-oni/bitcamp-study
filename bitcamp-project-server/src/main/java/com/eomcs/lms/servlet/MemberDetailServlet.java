@@ -3,34 +3,35 @@ package com.eomcs.lms.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.GenericServlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.ApplicationContext;
+
 import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
 
 @WebServlet("/member/detail")
-public class MemberDetailServlet extends GenericServlet {
+public class MemberDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void service(ServletRequest req, ServletResponse res)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+ 
 		try {
-			res.setContentType("text/html;charset=UTF-8");
-			PrintWriter out = res.getWriter();
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
 
-			ServletContext servletContext = req.getServletContext();
+			ServletContext servletContext = request.getServletContext();
 			ApplicationContext iocContainer =
 					(ApplicationContext) servletContext.getAttribute("iocContainer");
 			MemberService memberService = iocContainer.getBean(MemberService.class);
 
-			int no = Integer.parseInt(req.getParameter("no"));
+			int no = Integer.parseInt(request.getParameter("no"));
 
 			Member member = memberService.get(no);
 
