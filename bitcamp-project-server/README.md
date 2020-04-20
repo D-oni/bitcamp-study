@@ -1,32 +1,43 @@
-# 58_1 - Front Controller 설계 기법 적용하기
+# 59_1 - Spring WebMVC 적용하기
 
 ## 학습목표
 
-- Front Controller 설계 기법의 이점을 이해한다.
-
-### Front Controller
-
-- 컨트롤러들의 공통 기능을 가져와서 통합 처리한다.
-- 외부의 접점을 하나로 줄임으로써 요청을 제어하기가 쉬워진다.
+- Spring WebMVC 프레임워크를 프로젝트에 적용할 수 있다.
+- Spring WebMVC 프레임워크의 규칙에 따라 웹 애플리케이션을 작성할 수 있다.
 
 
 ## 실습 소스 및 결과
 
-- src/main/java/com/eomcs/lms/servlet/DispatcherServlet.java 추가
-- src/main/java/com/eomcs/lms/servlet/XxxServlet.java 변경
-- src/main/webapp/member/detail.jsp 변경
-- src/main/webapp/photoboard/detail.jsp 변경
+- src/main/java/com/eomcs/lms/ContextLoaderListener.java 삭제
+- src/main/java/com/eomcs/lms/servlet/DispatcherServlet.java 삭제
+- src/main/java/com/eomcs/lms/filter/CharacterEncodingFilter.java 삭제
+- src/main/java/com/eomcs/lms/util/RequestHandler.java 삭제
+- src/main/java/com/eomcs/lms/util/RequestMapping.java 삭제
+- src/main/java/com/eomcs/lms/util/RequestMappingHandlerMapping.java 삭제
+- src/main/webapp/WEB-INF/web.xml 변경
 
 ## 실습  
 
-### 훈련1: 프론트 컨트롤러 역할을 수행할 서블릿을 만든다.
+### 훈련1: Spring WebMVC 프레임워크를 프로젝트에 적용한다.
 
-- com.eomcs.lms.servlet.DispatcherServlet 추가
-  - /app/* 요청을 처리한다.
+- 라이브러리 가져오기
+  - search.maven.org 에서 'spring-webmvc' 검색한다.
+  - 라이브러리 정보를 build.gradle에 추가한다.
+  - 'gradle eclipse'를 실행하여 이클립스 설정 파일을 갱신한다.
+  - 이클립스에서 프로젝트를 갱신한다.
 
-### 훈련2: 프론트 컨트롤러 역할에 맞춰서 기존의 서블릿을 페이지 컨트롤러로 변경한다.
+### 훈련2: 페이지 컨트롤러를 Spring WebMVC 프레임워크 사용법에 따라 변경한다.
 
-- com.eomcs.lms.servlet.XxxServlet 변경
-  - 직접 JSP를 인클루딩 하는 대신에 JSP URL을 ServletRequest에 저장한다.
-  - 직접 리다이렉트 하는 대신에 리다이렉트 URL을 ServletRequest에 저장한다.
-  - 직접 예외처리 서블릿으로 포워딩 하는 대신에 ServletRequest에 저장한다.
+- com.eomcs.lms.web.XxxController.java 변경
+  - @Component 대신에 @Controller로 교체한다.
+  - @RequestMapping 애노테이션의 패키지를 Spring WebMVC 라이브러리 것으로 교체한다.
+
+### 훈련3: Spring WebMVC에서 제공하는 프론트 컨트롤러 서블릿을 설정한다.
+
+- src/main/webapp/WEB-INF/web.xml 변경
+  - DispatcherServlet 클래스를 등록한다.
+  - CharacterEncodingFilter 클래스를 등록한다.
+  - multipart-config를 설정한다.
+
+
+
